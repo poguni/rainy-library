@@ -5,10 +5,12 @@ interface Props {
   value: string;
   onChange: (value: string) => void;
   error?: string;
+  /** 단위(기본 '쪽'). 설정의 시간 입력에서는 '분' */
+  unit?: string;
 }
 
 /** 쪽수 입력칸(DESIGN.md 7장): 높이 48px, 숫자 키패드, 옆에 −/+ 버튼(44px), label 연결 */
-export function PageStepper({ id, label, value, onChange, error }: Props) {
+export function PageStepper({ id, label, value, onChange, error, unit = '쪽' }: Props) {
   const step = (delta: number) => onChange(String(Math.max(0, (Number(value) || 0) + delta)));
   const btn =
     'press flex size-11 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface text-xl text-ink';
@@ -21,7 +23,7 @@ export function PageStepper({ id, label, value, onChange, error }: Props) {
       <div className="flex items-center gap-2">
         <button
           type="button"
-          aria-label={`${label} 1쪽 줄이기`}
+          aria-label={`${label} 1${unit} 줄이기`}
           onClick={() => step(-1)}
           className={btn}
         >
@@ -41,12 +43,12 @@ export function PageStepper({ id, label, value, onChange, error }: Props) {
             aria-hidden="true"
             className="absolute top-1/2 right-3 -translate-y-1/2 text-sm text-ink-muted"
           >
-            쪽
+            {unit}
           </span>
         </div>
         <button
           type="button"
-          aria-label={`${label} 1쪽 늘리기`}
+          aria-label={`${label} 1${unit} 늘리기`}
           onClick={() => step(1)}
           className={btn}
         >

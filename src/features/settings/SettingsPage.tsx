@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
+import { getSettings } from '../../db/settings';
+import { useLiveQuery } from '../../db/useLiveQuery';
+import { ChimeSettings } from './ChimeSettings';
 import { DevTools } from './DevTools';
+import { ScreenSettings } from './ScreenSettings';
+import { TimerSettings } from './TimerSettings';
 
 export function SettingsPage() {
+  const settings = useLiveQuery(getSettings, []);
   return (
     <section className="flex flex-col gap-6">
       <div className="flex items-center gap-2">
@@ -26,9 +32,15 @@ export function SettingsPage() {
         </Link>
         <h1 className="font-display text-xl font-bold">설정</h1>
       </div>
-      <p className="text-sm text-ink-muted">
-        타이머·알림음·테마 설정은 다음 단계에서 이곳에 추가돼요.
-      </p>
+      {settings && (
+        <>
+          <TimerSettings settings={settings} />
+          <hr className="border-line" />
+          <ChimeSettings settings={settings} />
+          <hr className="border-line" />
+          <ScreenSettings settings={settings} />
+        </>
+      )}
       {/* 개발 모드에서만 보이는 도구(설정 화면 맨 아래) */}
       {import.meta.env.DEV && <DevTools />}
     </section>

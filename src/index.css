@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './theme/tokens.css';
+@import './theme/fonts.css';
 
 /* Tailwind 기본 색·글꼴은 끄고, 토큰 변수에만 연결합니다. */
 @theme inline reference {

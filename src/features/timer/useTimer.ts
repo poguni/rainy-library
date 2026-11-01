@@ -17,7 +17,7 @@ import {
 } from '../../lib/timer';
 import { unlockAudio } from '../sound/audioContext';
 import { soundEngine } from '../sound/engine';
-import { playChime } from './chime';
+import { playChime, type ChimeStyle } from './chime';
 import { askNotifyPermission, notifyPhase } from './notify';
 
 /** 진행 중인 세션. 새로고침 후 바로 이어지도록 localStorage에 둡니다(기기 밖으로 나가지 않음). */
@@ -51,17 +51,21 @@ function store(a: ActiveSession | null) {
 }
 
 /** 방금(10초 안에) 바뀐 구간만 소리로 알립니다. 오래 닫아 두었다 연 경우엔 조용히 따라잡기만. */
-function announce(state: TimerState, now: number) {
+function announce(state: TimerState, now: number, style: ChimeStyle) {
   if (now - state.phaseStart > 10_000) return;
-  playChime(state.phase === 'focus' ? 'breakEnd' : 'focusEnd');
-  notifyPhase(state.phase);
+  playChime(state.phase === 'focus' ? 'breakEnd' : 'focusEnd', style);
+  void notifyPhase(state.phase);
 }
 
 /** 타이머 상태 본체. 화면에서는 TimerProvider를 거쳐 useTimer()로 씁니다. */
-export function useTimerState() {
+export function useTimerState(chimeStyle: ChimeStyle) {
   const [active, setActiveState] = useState<ActiveSession | null>(load);
   const [now, setNow] = useState(() => Date.now());
   const ref = useRef(active);
+  const chimeRef = useRef(chimeStyle);
+  useEffect(() => {
+    chimeRef.current = chimeStyle;
+  }, [chimeStyle]);
 
   const setActive = useCallback((a: ActiveSession | null) => {
     ref.current = a;
@@ -95,7 +99,7 @@ export function useTimerState() {
       const { state, entered } = catchUp(a.timer, a.durations, t);
       if (entered.length > 0) {
         setActive({ ...a, timer: state });
-        announce(state, t);
+        announce(state, t, chimeRef.current);
       }
     };
     const id = setInterval(tick, 1000);

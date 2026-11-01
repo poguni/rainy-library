@@ -13,13 +13,20 @@ const TEXT: Record<Phase, { title: string; body: string }> = {
   longBreak: { title: '길게 쉬어 갈 시간이에요', body: '네 번 집중했어요. 충분히 쉬어 주세요.' },
 };
 
-/** 권한을 허락했고 앱이 화면에 보이지 않을 때만 시스템 알림을 띄웁니다. */
-export function notifyPhase(phase: Phase) {
+/**
+ * 권한을 허락했고 앱이 화면에 보이지 않을 때만 시스템 알림을 띄웁니다.
+ * 안드로이드 크롬은 페이지에서 바로 띄우는 알림을 막으므로, 서비스 워커가 있으면 그쪽으로 띄웁니다.
+ */
+export async function notifyPhase(phase: Phase) {
   if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
   if (!document.hidden) return;
+  const { title, body } = TEXT[phase];
+  const options = { body, tag: 'rl-phase', icon: 'icons/icon-192.png' };
   try {
-    new Notification(TEXT[phase].title, { body: TEXT[phase].body, tag: 'rl-phase' });
+    const reg = await navigator.serviceWorker?.getRegistration();
+    if (reg) await reg.showNotification(title, options);
+    else new Notification(title, options);
   } catch {
-    // 안드로이드 크롬은 서비스 워커 알림만 허용합니다(5단계에서 보완).
+    // 알림을 못 띄워도 알림음은 이미 울렸으니 조용히 넘어갑니다.
   }
 }

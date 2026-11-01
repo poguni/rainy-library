@@ -1,0 +1,24 @@
+/* 종이 서재 글꼴(SIL Open Font License). scripts/subset-fonts.py로 한글 2,350자 등만 남긴 woff2.
+   이름은 tokens.css의 --font-display / --font-body / --font-numeral과 같아야 합니다.
+   에메랄드 글꼴은 8단계에서 추가합니다. 브라우저는 지금 테마가 쓰는 글꼴만 내려받습니다. */
+@font-face {
+  font-family: 'Gowun Batang';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/gowun-batang-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Gowun Batang';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/gowun-batang-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Gowun Dodum';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/gowun-dodum-400.woff2') format('woff2');
+}
