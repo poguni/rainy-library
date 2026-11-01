@@ -1,4 +1,4 @@
-import { bookTotals, progressPercent, spineLook } from './books';
+import { bookTotals, pickCurrentBook, progressPercent, spineLook } from './books';
 import type { Session } from '../db/types';
 
 const ses = (bookId: string, focusSeconds: number): Session => ({
@@ -47,5 +47,24 @@ describe('spineLook', () => {
       expect(look.colorIndex).toBeLessThanOrEqual(6);
       expect(look.darkInk).toBe(look.colorIndex === 2 || look.colorIndex === 6);
     }
+  });
+});
+
+describe('pickCurrentBook', () => {
+  const books = [
+    { id: 'a', status: 'reading' },
+    { id: 'b', status: 'reading' },
+    { id: 'c', status: 'finished' },
+  ];
+  const s = (bookId: string, endedAt: string) => ({ ...ses(bookId, 60), endedAt });
+
+  it('고른 책이 읽는 중이면 그 책', () => expect(pickCurrentBook(books, [], 'b')?.id).toBe('b'));
+  it('고른 책이 완독이면 가장 최근에 읽은 읽는 중인 책', () => {
+    const list = [s('a', '2026-10-01'), s('b', '2026-10-05'), s('c', '2026-10-09')];
+    expect(pickCurrentBook(books, list, 'c')?.id).toBe('b');
+  });
+  it('기록이 없으면 첫 책, 읽는 중인 책이 없으면 없음', () => {
+    expect(pickCurrentBook(books, [])?.id).toBe('a');
+    expect(pickCurrentBook([{ id: 'c', status: 'paused' }], [])).toBeUndefined();
   });
 });

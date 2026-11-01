@@ -55,6 +55,8 @@ export interface Settings {
   autoRule: 'system' | 'schedule';
   nightStart: string;
   nightEnd: string;
+  /** 타이머 홈에서 고른 '지금 읽는 책'(색인 없는 필드라 스키마 버전 변경 불필요) */
+  currentBookId?: string;
 }
 
 /** settings 저장소는 key='app' 한 줄만 씁니다. */

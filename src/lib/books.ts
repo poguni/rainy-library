@@ -51,3 +51,20 @@ export function spineLook(id: string, totalPages: number): SpineLook {
     height: 86 + (Math.floor(h / 6) % 43),
   };
 }
+
+/** 타이머 홈의 '지금 읽는 책': 고른 책 → 가장 최근에 읽은 책 → 첫 책 (읽는 중인 책만) */
+export function pickCurrentBook<B extends { id: string; status: string }>(
+  books: B[],
+  sessions: Session[],
+  preferredId?: string,
+): B | undefined {
+  const reading = books.filter((b) => b.status === 'reading');
+  const preferred = reading.find((b) => b.id === preferredId);
+  if (preferred) return preferred;
+  let latest: Session | undefined;
+  for (const s of sessions) {
+    if (reading.some((b) => b.id === s.bookId) && (!latest || s.endedAt > latest.endedAt))
+      latest = s;
+  }
+  return reading.find((b) => b.id === latest?.bookId) ?? reading[0];
+}
