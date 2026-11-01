@@ -8,6 +8,19 @@ export function formatDuration(totalSeconds: number): string {
   return `${h}시간 ${m}분`;
 }
 
+/** 대략의 시간: 10분 단위로 반올림한 "4시간", "4시간 10분"(10분 미만은 올림해 "7분") */
+export function formatApproxMinutes(minutes: number): string {
+  const m = minutes < 10 ? Math.max(1, Math.ceil(minutes)) : Math.round(minutes / 10) * 10;
+  return formatDuration(m * 60);
+}
+
+const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
+
+/** 날짜: "11월 14일 (토)" (DESIGN.md 12장) */
+export function formatKoreanDate(date: Date): string {
+  return `${date.getMonth() + 1}월 ${date.getDate()}일 (${WEEKDAYS[date.getDay()]})`;
+}
+
 /** 타이머 숫자: "18:42", 1시간이 넘으면 "1:02:03" */
 export function formatClock(totalSeconds: number): string {
   const sec = Math.max(0, Math.floor(totalSeconds));

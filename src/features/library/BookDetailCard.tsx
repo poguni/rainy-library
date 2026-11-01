@@ -4,10 +4,15 @@ import { progressPercent } from '../../lib/books';
 import { formatDuration } from '../../lib/time';
 import { STATUSES, STATUS_LABEL } from './useLibrary';
 import { BlobImage } from '../../components/BlobImage';
+import { FinishCard } from '../../theme/parts';
+import type { FinishCardProps } from '../../theme/variants/paper/FinishCard';
 
 interface Props {
   book: Book;
   totals?: BookTotals;
+  /** 평균 속도 글자("0.37쪽/분" 또는 "—") */
+  speedText: string;
+  finish?: FinishCardProps;
   onStatusChange: (s: BookStatus) => void;
 }
 
@@ -22,8 +27,8 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** 선택한 책의 상세(진행률, 누적 시간, 세션 수). 평균 속도·완독일은 3단계에서 채웁니다. */
-export function BookDetailCard({ book, totals, onStatusChange }: Props) {
+/** 선택한 책의 상세(진행률, 누적 시간, 평균 속도, 세션 수, 완독 예상일) */
+export function BookDetailCard({ book, totals, speedText, finish, onStatusChange }: Props) {
   const percent = progressPercent(book.currentPage, book.totalPages);
 
   return (
@@ -73,9 +78,11 @@ export function BookDetailCard({ book, totals, onStatusChange }: Props) {
 
       <div className="grid grid-cols-3 gap-2">
         <Stat label="누적 독서" value={totals ? formatDuration(totals.focusSeconds) : '—'} />
-        <Stat label="평균 속도" value="—" />
+        <Stat label="평균 속도" value={speedText} />
         <Stat label="독서 세션" value={totals ? `${totals.sessionCount}회` : '—'} />
       </div>
+
+      {finish && <FinishCard {...finish} />}
 
       <label className="flex items-center justify-between gap-3 text-sm text-ink-muted">
         상태 바꾸기

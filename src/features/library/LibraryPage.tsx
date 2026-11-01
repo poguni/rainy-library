@@ -4,6 +4,7 @@ import { BookDetailCard } from './BookDetailCard';
 import { FilterChips } from './FilterChips';
 import { Shelf } from './Shelf';
 import { useLibrary } from './useLibrary';
+import { useBookReading } from './useBookReading';
 import type { BookStatus } from '../../db/types';
 
 const EMPTY_TEXT: Record<BookStatus, string> = {
@@ -14,6 +15,7 @@ const EMPTY_TEXT: Record<BookStatus, string> = {
 
 export function LibraryPage() {
   const lib = useLibrary();
+  const reading = useBookReading(lib.selected);
   const [adding, setAdding] = useState(false);
 
   return (
@@ -55,6 +57,8 @@ export function LibraryPage() {
         <BookDetailCard
           book={lib.selected}
           totals={lib.totals}
+          speedText={reading.speedText}
+          finish={reading.finish}
           onStatusChange={(s) => lib.changeStatus(lib.selected!.id, s)}
         />
       )}

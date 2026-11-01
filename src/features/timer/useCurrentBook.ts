@@ -19,6 +19,7 @@ export function useCurrentBook(activeBookId?: string) {
   return {
     loading: !books || !sessions || !settings,
     settings,
+    books: books ?? [],
     book,
     reading,
     suggestedStartPage: book ? defaultStartPage(book, sessions ?? []) : undefined,

@@ -1,4 +1,26 @@
-import { formatClock, formatDuration, todayLine } from './time';
+import {
+  formatApproxMinutes,
+  formatClock,
+  formatDuration,
+  formatKoreanDate,
+  todayLine,
+} from './time';
+
+describe('formatApproxMinutes', () => {
+  it.each([
+    [241, '4시간'],
+    [250, '4시간 10분'],
+    [6.2, '7분'],
+    [44, '40분'],
+    [0.2, '1분'],
+  ])('%f분 → 약 %s', (min, text) => expect(formatApproxMinutes(min)).toBe(text));
+});
+
+describe('formatKoreanDate', () => {
+  it('시안 예: 11월 14일 (토)', () => {
+    expect(formatKoreanDate(new Date(2026, 10, 14))).toBe('11월 14일 (토)');
+  });
+});
 
 describe('formatDuration', () => {
   it.each([

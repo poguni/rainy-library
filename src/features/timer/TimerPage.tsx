@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { PageStepper } from '../../components/PageStepper';
 import { checkStartPage } from '../../lib/pages';
-import { formatDuration } from '../../lib/time';
 import { ROUNDS_PER_CYCLE, roundInCycle, type TimerMode } from '../../lib/timer';
 import { DEFAULT_SETTINGS } from '../../db/settings';
 import { TimerFace } from '../../theme/parts';
 import { BookPickerSheet } from './BookPickerSheet';
 import { CurrentBookCard } from './CurrentBookCard';
 import { EndSessionSheet } from './EndSessionSheet';
+import { SessionResultSheet } from './SessionResultSheet';
+import type { Session } from '../../db/types';
 import { ModeSwitch } from './ModeSwitch';
 import { TimerControls } from './TimerControls';
 import { TimerHeader } from './TimerHeader';
@@ -22,7 +23,7 @@ export function TimerPage() {
   const [startChecked, setStartChecked] = useState(false);
   const [sheet, setSheet] = useState<'none' | 'pick' | 'end'>('none');
   const [resumeAfterSheet, setResumeAfterSheet] = useState(false);
-  const [message, setMessage] = useState('');
+  const [result, setResult] = useState<Session | null>(null);
 
   const durations = cur.settings ?? DEFAULT_SETTINGS;
   const book = cur.book;
@@ -42,7 +43,6 @@ export function TimerPage() {
   const start = () => {
     setStartChecked(true);
     if (!book || startProblem) return;
-    setMessage('');
     timer.start(mode, book.id, Number(startValue), durations);
     setStartChecked(false);
     setStartEdit(null);
@@ -106,10 +106,6 @@ export function TimerPage() {
         onSkip={timer.skip}
       />
 
-      <p role="status" className="min-h-5 text-center text-sm text-ink-muted">
-        {message}
-      </p>
-
       {sheet === 'pick' && (
         <BookPickerSheet
           books={cur.reading}
@@ -128,10 +124,15 @@ export function TimerPage() {
           onSave={async (endPage) => {
             const saved = await timer.finish(endPage);
             setSheet('none');
-            if (!saved) return;
-            const pages = endPage === null ? '' : `${endPage - saved.startPage!}쪽, `;
-            setMessage(`기록했어요. ${pages}${formatDuration(saved.focusSeconds)} 읽었어요.`);
+            setResult(saved);
           }}
+        />
+      )}
+      {result && (
+        <SessionResultSheet
+          session={result}
+          book={cur.books.find((b) => b.id === result.bookId)}
+          onClose={() => setResult(null)}
         />
       )}
     </section>
