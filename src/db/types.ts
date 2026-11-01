@@ -57,6 +57,14 @@ export interface Settings {
   nightEnd: string;
   /** 타이머 홈에서 고른 '지금 읽는 책'(색인 없는 필드라 스키마 버전 변경 불필요) */
   currentBookId?: string;
+  /** 지금 믹서 조합(색인 없는 필드) */
+  mixer?: Mix;
+}
+
+/** 믹서 조합: 소리별 켜짐·음량(0~1) + 마스터 음량(0~1). 프리셋과 같은 모양 */
+export interface Mix {
+  layers: SoundLayer[];
+  masterVolume: number;
 }
 
 /** settings 저장소는 key='app' 한 줄만 씁니다. */

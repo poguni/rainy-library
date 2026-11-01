@@ -16,6 +16,7 @@ import {
   type TimerState,
 } from '../../lib/timer';
 import { unlockAudio } from '../sound/audioContext';
+import { soundEngine } from '../sound/engine';
 import { playChime } from './chime';
 import { askNotifyPermission, notifyPhase } from './notify';
 
@@ -56,7 +57,8 @@ function announce(state: TimerState, now: number) {
   notifyPhase(state.phase);
 }
 
-export function useTimer() {
+/** 타이머 상태 본체. 화면에서는 TimerProvider를 거쳐 useTimer()로 씁니다. */
+export function useTimerState() {
   const [active, setActiveState] = useState<ActiveSession | null>(load);
   const [now, setNow] = useState(() => Date.now());
   const ref = useRef(active);
@@ -126,6 +128,7 @@ export function useTimer() {
       const t = Date.now();
       setNow(t);
       setActive({ timer: startTimer(mode, t), durations, bookId, startPage, startedAt: t });
+      void soundEngine.play(); // 서서히 커짐(T-07)
     },
     pause: () => apply((s, t) => pauseTimer(s, t)),
     resume: () => {
@@ -153,6 +156,7 @@ export function useTimer() {
       };
       await saveSession(session);
       setActive(null);
+      soundEngine.stop();
       return session;
     },
   };

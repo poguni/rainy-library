@@ -8,12 +8,13 @@ import { BookPickerSheet } from './BookPickerSheet';
 import { CurrentBookCard } from './CurrentBookCard';
 import { EndSessionSheet } from './EndSessionSheet';
 import { SessionResultSheet } from './SessionResultSheet';
+import { SoundSummary } from '../sound/SoundSummary';
 import type { Session } from '../../db/types';
 import { ModeSwitch } from './ModeSwitch';
 import { TimerControls } from './TimerControls';
 import { TimerHeader } from './TimerHeader';
 import { useCurrentBook } from './useCurrentBook';
-import { useTimer } from './useTimer';
+import { useTimer } from './timerContext';
 
 export function TimerPage() {
   const timer = useTimer();
@@ -105,6 +106,8 @@ export function TimerPage() {
         onEnd={openEnd}
         onSkip={timer.skip}
       />
+
+      <SoundSummary />
 
       {sheet === 'pick' && (
         <BookPickerSheet
