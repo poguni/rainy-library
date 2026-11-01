@@ -33,3 +33,20 @@ body {
   background: var(--color-bg);
   word-break: keep-all;
 }
+
+/* 버튼 누름: 0.97배, 150ms (DESIGN.md 11장) */
+.press {
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(100%);
+  }
+}
+.sheet-up {
+  animation: sheet-up var(--dur-base) var(--ease-out);
+}

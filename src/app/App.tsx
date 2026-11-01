@@ -4,6 +4,7 @@ import { TimerPage } from '../features/timer/TimerPage';
 import { SoundPage } from '../features/sound/SoundPage';
 import { LibraryPage } from '../features/library/LibraryPage';
 import { StatsPage } from '../features/stats/StatsPage';
+import { SettingsPage } from '../features/settings/SettingsPage';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/sound" element={<SoundPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/stats" element={<StatsPage />} />
+          <Route path="/stats/settings" element={<SettingsPage />} />
           <Route path="*" element={<Navigate to="/timer" replace />} />
         </Routes>
       </main>

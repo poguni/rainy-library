@@ -36,6 +36,10 @@
   --dur-fast: 150ms;
   --dur-base: 200ms;
   --dur-slow: 400ms;
+
+  /* 앱에서 추가한 토큰(docs/design/tokens.css에는 없음) */
+  --spine-shade: rgba(0, 0, 0, 0.15); /* 책등 왼쪽 4px 그늘 */
+  --color-scrim: rgba(0, 0, 0, 0.4); /* 바텀 시트 뒤 배경 어둡게 40% */
 }
 
 /* ---------- 종이 서재 (A안, 기본값) ---------- */
