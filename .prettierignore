@@ -1,0 +1,8 @@
+dist
+docs
+claude docs
+.omc
+package-lock.json
+.playwright-mcp
+*.md
+*.html

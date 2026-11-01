@@ -1,0 +1,350 @@
+{
+  "_comment": "개발용 샘플 데이터입니다. 쪽수 등은 실제 판본과 다를 수 있습니다. 데미안 데이터는 디자인 시안 숫자(142/248쪽, 14회, 6시간 20분, 마지막 세션 120→142쪽 50분)와 맞춰져 있습니다.",
+  "schemaVersion": 1,
+  "books": [
+    {
+      "id": "book_demian",
+      "title": "데미안",
+      "author": "헤르만 헤세",
+      "totalPages": 248,
+      "status": "reading",
+      "currentPage": 142,
+      "createdAt": "2026-10-12T20:00:00+09:00"
+    },
+    {
+      "id": "book_walden",
+      "title": "월든",
+      "author": "헨리 데이비드 소로",
+      "totalPages": 400,
+      "status": "finished",
+      "currentPage": 400,
+      "createdAt": "2026-09-01T19:30:00+09:00"
+    },
+    {
+      "id": "book_stranger",
+      "title": "이방인",
+      "author": "알베르 카뮈",
+      "totalPages": 180,
+      "status": "reading",
+      "currentPage": 64,
+      "createdAt": "2026-10-20T21:00:00+09:00"
+    },
+    {
+      "id": "book_prince",
+      "title": "어린 왕자",
+      "author": "앙투안 드 생텍쥐페리",
+      "totalPages": 150,
+      "status": "finished",
+      "currentPage": 150,
+      "createdAt": "2026-08-15T10:00:00+09:00"
+    },
+    {
+      "id": "book_oldman",
+      "title": "노인과 바다",
+      "author": "어니스트 헤밍웨이",
+      "totalPages": 140,
+      "status": "paused",
+      "currentPage": 38,
+      "createdAt": "2026-09-25T22:00:00+09:00"
+    },
+    {
+      "id": "book_meta",
+      "title": "변신",
+      "author": "프란츠 카프카",
+      "totalPages": 120,
+      "status": "reading",
+      "currentPage": 20,
+      "createdAt": "2026-10-28T21:00:00+09:00"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "ses_demian_01",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-12T21:00:00+09:00",
+      "endedAt": "2026-10-12T21:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 1,
+      "endPage": 11,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_02",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-13T21:00:00+09:00",
+      "endedAt": "2026-10-13T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 11,
+      "endPage": 19,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_03",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-14T21:00:00+09:00",
+      "endedAt": "2026-10-14T21:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 19,
+      "endPage": 29,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_04",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-16T21:00:00+09:00",
+      "endedAt": "2026-10-16T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 29,
+      "endPage": 37,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_05",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-17T21:00:00+09:00",
+      "endedAt": "2026-10-17T21:15:00+09:00",
+      "focusSeconds": 900,
+      "startPage": 37,
+      "endPage": 42,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_06",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-19T21:00:00+09:00",
+      "endedAt": "2026-10-19T21:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 42,
+      "endPage": 52,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_07",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-20T21:00:00+09:00",
+      "endedAt": "2026-10-20T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 52,
+      "endPage": 60,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_08",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-21T21:00:00+09:00",
+      "endedAt": "2026-10-21T21:20:00+09:00",
+      "focusSeconds": 1200,
+      "startPage": 60,
+      "endPage": 66,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_09",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-23T21:00:00+09:00",
+      "endedAt": "2026-10-23T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 66,
+      "endPage": 74,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_10",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-24T21:00:00+09:00",
+      "endedAt": "2026-10-24T21:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 74,
+      "endPage": 87,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_11",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-26T21:00:00+09:00",
+      "endedAt": "2026-10-26T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 87,
+      "endPage": 98,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_12",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-27T21:00:00+09:00",
+      "endedAt": "2026-10-27T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 98,
+      "endPage": 109,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_13",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-29T21:00:00+09:00",
+      "endedAt": "2026-10-29T21:25:00+09:00",
+      "focusSeconds": 1500,
+      "startPage": 109,
+      "endPage": 120,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_demian_14",
+      "bookId": "book_demian",
+      "startedAt": "2026-10-31T21:05:00+09:00",
+      "endedAt": "2026-10-31T21:55:00+09:00",
+      "focusSeconds": 3000,
+      "startPage": 120,
+      "endPage": 142,
+      "mode": "pomodoro",
+      "presetId": "preset_rainy_night"
+    },
+    {
+      "id": "ses_stranger_01",
+      "bookId": "book_stranger",
+      "startedAt": "2026-10-21T22:00:00+09:00",
+      "endedAt": "2026-10-21T22:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 1,
+      "endPage": 16,
+      "mode": "free",
+      "presetId": "preset_book_cafe"
+    },
+    {
+      "id": "ses_stranger_02",
+      "bookId": "book_stranger",
+      "startedAt": "2026-10-23T22:00:00+09:00",
+      "endedAt": "2026-10-23T22:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 16,
+      "endPage": 31,
+      "mode": "free",
+      "presetId": "preset_book_cafe"
+    },
+    {
+      "id": "ses_stranger_03",
+      "bookId": "book_stranger",
+      "startedAt": "2026-10-25T22:00:00+09:00",
+      "endedAt": "2026-10-25T22:30:00+09:00",
+      "focusSeconds": 1800,
+      "startPage": 31,
+      "endPage": 46,
+      "mode": "free",
+      "presetId": "preset_book_cafe"
+    },
+    {
+      "id": "ses_stranger_04",
+      "bookId": "book_stranger",
+      "startedAt": "2026-10-27T22:00:00+09:00",
+      "endedAt": "2026-10-27T22:36:00+09:00",
+      "focusSeconds": 2160,
+      "startPage": 46,
+      "endPage": 64,
+      "mode": "free",
+      "presetId": "preset_book_cafe"
+    },
+    {
+      "id": "ses_meta_01",
+      "bookId": "book_meta",
+      "startedAt": "2026-10-29T22:00:00+09:00",
+      "endedAt": "2026-10-29T22:38:00+09:00",
+      "focusSeconds": 2280,
+      "startPage": 1,
+      "endPage": 20,
+      "mode": "free",
+      "presetId": "preset_book_cafe"
+    }
+  ],
+  "presets": [
+    {
+      "id": "preset_rainy_night",
+      "name": "비 오는 밤",
+      "layers": [
+        {
+          "soundId": "rain",
+          "volume": 0.6,
+          "on": true
+        },
+        {
+          "soundId": "fire",
+          "volume": 0.25,
+          "on": true
+        },
+        {
+          "soundId": "cafe",
+          "volume": 0.3,
+          "on": false
+        }
+      ],
+      "masterVolume": 0.8
+    },
+    {
+      "id": "preset_book_cafe",
+      "name": "북카페",
+      "layers": [
+        {
+          "soundId": "rain",
+          "volume": 0.2,
+          "on": true
+        },
+        {
+          "soundId": "fire",
+          "volume": 0,
+          "on": false
+        },
+        {
+          "soundId": "cafe",
+          "volume": 0.6,
+          "on": true
+        }
+      ],
+      "masterVolume": 0.8
+    },
+    {
+      "id": "preset_cabin_fire",
+      "name": "산장의 벽난로",
+      "layers": [
+        {
+          "soundId": "rain",
+          "volume": 0.3,
+          "on": true
+        },
+        {
+          "soundId": "fire",
+          "volume": 0.7,
+          "on": true
+        },
+        {
+          "soundId": "cafe",
+          "volume": 0,
+          "on": false
+        }
+      ],
+      "masterVolume": 0.8
+    }
+  ],
+  "settings": {
+    "focusMin": 25,
+    "shortBreakMin": 5,
+    "longBreakMin": 15,
+    "wakeLock": true,
+    "chime": "bell",
+    "theme": "auto",
+    "autoRule": "system",
+    "nightStart": "19:00",
+    "nightEnd": "07:00"
+  }
+}

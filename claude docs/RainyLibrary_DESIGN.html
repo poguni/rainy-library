@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>��������� ������ DESIGN</title>
+<style>
+:root{--bg:#faf6ef;--card:#fffdf8;--side:#f3ebdf;--text:#2f2a24;--muted:#7a6f62;--accent:#a0612f;--line:#e6dccd;--code:#f3ece1;--th:#f1e7d8;--hover:#ead9c3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1b1f2a;--card:#232837;--side:#161a24;--text:#e9e4da;--muted:#a59d90;--accent:#e0a370;--line:#363c4e;--code:#2b3142;--th:#2c3344;--hover:#2a3042}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;line-height:1.75;word-break:keep-all}
+/* 왼쪽 네비게이션 */
+#sidebar{position:fixed;top:0;left:0;bottom:0;width:280px;background:var(--side);border-right:1px solid var(--line);overflow-y:auto;padding:28px 16px 40px;z-index:20;transition:transform .25s ease}
+#sidebar .brand{font-weight:700;font-size:1.1rem;color:var(--accent);margin:0 8px 4px;line-height:1.4}
+#sidebar .sub{font-size:.8rem;color:var(--muted);margin:0 8px 18px}
+#sidebar ul{list-style:none;margin:0;padding:0}
+#sidebar li{margin:0}
+#sidebar a{display:block;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:6px;font-size:.92rem;line-height:1.45;border-left:3px solid transparent}
+#sidebar a:hover{background:var(--hover)}
+#sidebar>ul>li>a{display:none}
+#sidebar>ul>li>ul{display:block}
+#sidebar ul ul ul{margin:2px 0 6px 12px;display:none}
+#sidebar li.open>ul{display:block}
+#sidebar ul ul ul a{font-size:.84rem;color:var(--muted);padding:4px 10px}
+#sidebar a.active{background:var(--hover);color:var(--accent);font-weight:700;border-left-color:var(--accent)}
+#toggle{display:none;position:fixed;top:12px;left:12px;z-index:30;width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:1.3rem;cursor:pointer}
+#backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:15}
+#progress{position:fixed;top:0;left:280px;right:0;height:3px;background:var(--accent);transform-origin:left;transform:scaleX(0);z-index:25}
+/* 본문 */
+main{margin-left:280px;padding:40px 40px 100px}
+main>*{max-width:880px;margin-left:auto;margin-right:auto}
+h1{font-size:2rem;line-height:1.3;color:var(--accent);margin:0 auto 16px}
+h2{font-size:1.4rem;margin-top:56px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+h3{font-size:1.1rem;margin-top:32px;color:var(--accent)}
+blockquote{margin:0 auto 24px;padding:14px 20px;background:var(--card);border-left:4px solid var(--accent);border-radius:8px;color:var(--muted)}
+blockquote p{margin:0}
+hr{border:0;border-top:1px solid var(--line);margin:32px auto}
+table{width:100%;border-collapse:collapse;margin:16px auto;font-size:.94rem;background:var(--card)}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--th);white-space:nowrap}
+pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:.86rem;line-height:1.55}
+code{font-family:"D2Coding","JetBrains Mono",Consolas,monospace;background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+pre code{background:none;padding:0}
+strong{color:var(--accent)}
+li{margin:4px 0}
+#totop{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--accent);font-size:1.2rem;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
+#totop.show{opacity:1;pointer-events:auto}
+@media (max-width:900px){
+  #sidebar{padding-top:72px;transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.15)}
+  body.nav-open #sidebar{transform:none}
+  body.nav-open #backdrop{display:block}
+  #toggle{display:block}
+  #progress{left:0}
+  main{margin-left:0;padding:72px 16px 80px}
+  table{display:block;overflow-x:auto}
+}
+@media print{#sidebar,#toggle,#totop,#progress{display:none}main{margin:0;padding:0}}
+</style>
+</head>
+<body>
+<button id="toggle" aria-label="목차 열기" aria-controls="sidebar" aria-expanded="false">☰</button>
+<div id="backdrop"></div>
+<div id="progress"></div>
+<nav id="sidebar" aria-label="목차">
+  <div class="brand">빗소리 서재<br>Rainy Library</div>
+  <div class="sub">디자인 가이드 v1.0</div>
+<ul>
+<li><a href="#빗소리-서재rainy-library-디자인-가이드-designmd"
+id="toc-빗소리-서재rainy-library-디자인-가이드-designmd">빗소리
+서재(Rainy Library) 디자인 가이드 (DESIGN.md)</a>
+<ul>
+<li><a href="#1-디자인-원칙" id="toc-1-디자인-원칙">1. 디자인
+원칙</a></li>
+<li><a href="#2-두-가지-테마-한눈에-보기"
+id="toc-2-두-가지-테마-한눈에-보기">2. 두 가지 테마 한눈에 보기</a></li>
+<li><a href="#3-색상" id="toc-3-색상">3. 색상</a>
+<ul>
+<li><a href="#31-역할별-토큰" id="toc-31-역할별-토큰">3.1 역할별
+토큰</a></li>
+<li><a href="#32-책등-색서재-화면" id="toc-32-책등-색서재-화면">3.2 책등
+색(서재 화면)</a></li>
+<li><a href="#33-대비-확인-결과wcag" id="toc-33-대비-확인-결과wcag">3.3
+대비 확인 결과(WCAG)</a></li>
+</ul></li>
+<li><a href="#4-글꼴" id="toc-4-글꼴">4. 글꼴</a>
+<ul>
+<li><a href="#41-글꼴-묶음" id="toc-41-글꼴-묶음">4.1 글꼴 묶음</a></li>
+<li><a href="#42-글자-크기" id="toc-42-글자-크기">4.2 글자 크기</a></li>
+</ul></li>
+<li><a href="#5-간격-모양-그림자" id="toc-5-간격-모양-그림자">5. 간격,
+모양, 그림자</a></li>
+<li><a href="#6-아이콘" id="toc-6-아이콘">6. 아이콘</a></li>
+<li><a href="#7-공통-부품" id="toc-7-공통-부품">7. 공통 부품</a></li>
+<li><a href="#8-테마-전용-부품" id="toc-8-테마-전용-부품">8. 테마 전용
+부품</a>
+<ul>
+<li><a href="#81-타이머-표시-timerface"
+id="toc-81-타이머-표시-timerface">8.1 타이머 표시
+<code>TimerFace</code></a></li>
+<li><a href="#82-환경음-컨트롤-soundcontrols"
+id="toc-82-환경음-컨트롤-soundcontrols">8.2 환경음 컨트롤
+<code>SoundControls</code></a></li>
+<li><a href="#83-완독-예상일-카드-finishcard"
+id="toc-83-완독-예상일-카드-finishcard">8.3 완독 예상일 카드
+<code>FinishCard</code></a></li>
+<li><a href="#84-책등-bookspine" id="toc-84-책등-bookspine">8.4 책등
+<code>BookSpine</code></a></li>
+</ul></li>
+<li><a href="#9-테마별-화면-장식" id="toc-9-테마별-화면-장식">9. 테마별
+화면 장식</a></li>
+<li><a href="#10-테마-전환" id="toc-10-테마-전환">10. 테마 전환</a></li>
+<li><a href="#11-움직임" id="toc-11-움직임">11. 움직임</a></li>
+<li><a href="#12-글쓰기화면-문구" id="toc-12-글쓰기화면-문구">12.
+글쓰기(화면 문구)</a></li>
+<li><a href="#13-하지-말-것" id="toc-13-하지-말-것">13. 하지 말
+것</a></li>
+</ul></li>
+</ul>
+</nav>
+<main>
+<h1 id="빗소리-서재rainy-library-디자인-가이드-designmd">빗소리
+서재(Rainy Library) 디자인 가이드 (DESIGN.md)</h1>
+<blockquote>
+<p>문서 버전 v1.0 · 2026-10-31 이 문서는 앱의 <strong>두 가지
+테마</strong>를 코드로 옮길 때 지켜야 할 시각 규칙입니다. 함께 볼
+파일:</p>
+<ul>
+<li><code>docs/design/tokens.css</code>: 그대로 복사해서 쓰는 디자인
+토큰</li>
+<li><code>docs/design/paper-mockup.html</code>: 종이 서재 시안(타이머
+홈, 서재)</li>
+<li><code>docs/design/emerald-mockup.html</code>: 에메랄드 서재
+시안(타이머 홈, 서재)</li>
+</ul>
+<p>시안과 이 문서가 다르면 <strong>이 문서가 우선</strong>합니다(대비
+보정 등 시안 이후에 결정한 내용이 반영되어 있습니다).</p>
+</blockquote>
+<hr />
+<h2 id="1-디자인-원칙">1. 디자인 원칙</h2>
+<ol type="1">
+<li><strong>책이 주인공</strong> — 장식은 책과 서재에서 빌려
+옵니다(책장, 책갈피 리본, 책등, 장정, 금박). 의미 없는 그라데이션이나
+이모지는 쓰지 않습니다.</li>
+<li><strong>읽는 동안은 조용하게</strong> — 타이머가 돌아가는 동안
+움직이는 요소는 남은 시간과 진행 링뿐입니다. 알림 배지, 깜빡임, 자동
+재생 애니메이션은 없습니다.</li>
+<li><strong>한 번에 하나의 강조</strong> — 한 화면에서 강조색이 칠해진
+주 버튼은 하나입니다.</li>
+<li><strong>같은 구조, 다른 분위기</strong> — 두 테마는 화면 구조와
+기능이 같고, 색·글꼴·일부 부품의 모양만 다릅니다.</li>
+<li><strong>모두가 읽을 수 있게</strong> — 글자 대비 4.5:1 이상, 누를 수
+있는 영역 44×44px 이상.</li>
+</ol>
+<hr />
+<h2 id="2-두-가지-테마-한눈에-보기">2. 두 가지 테마 한눈에 보기</h2>
+<table>
+<thead>
+<tr class="header">
+<th>항목</th>
+<th>종이 서재 <code>paper</code> (기본값)</th>
+<th>에메랄드 서재 <code>emerald</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>한 줄 콘셉트</td>
+<td>비 오는 오후, 창가 책상 위에 펼친 종이책</td>
+<td>밤의 개인 서재, 금박을 입힌 가죽 양장본</td>
+</tr>
+<tr class="even">
+<td>바탕</td>
+<td>밝음(따뜻한 종이색)</td>
+<td>어두움(짙은 에메랄드)</td>
+</tr>
+<tr class="odd">
+<td>강조색</td>
+<td>이끼색 <code>#52664B</code></td>
+<td>금박 <code>#D4B072</code></td>
+</tr>
+<tr class="even">
+<td>제목 글꼴</td>
+<td>고운바탕</td>
+<td>본명조(Noto Serif KR)</td>
+</tr>
+<tr class="odd">
+<td>본문 글꼴</td>
+<td>고운돋움</td>
+<td>IBM Plex Sans KR</td>
+</tr>
+<tr class="even">
+<td>숫자 글꼴</td>
+<td>고운바탕</td>
+<td>Cormorant Garamond</td>
+</tr>
+<tr class="odd">
+<td>책 장식</td>
+<td>겹친 책장, 천 책갈피 리본, 나무 책꽂이</td>
+<td>금 이중선 테두리, 금장 다이얼, 금박 띠 책등</td>
+</tr>
+<tr class="even">
+<td>정렬</td>
+<td>왼쪽 정렬 중심</td>
+<td>가운데 정렬 중심(대칭)</td>
+</tr>
+<tr class="odd">
+<td>어울리는 때</td>
+<td>낮, 밝은 곳</td>
+<td>밤, 어두운 곳</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-색상">3. 색상</h2>
+<p>모든 색은 <code>tokens.css</code>의 CSS 변수로만 씁니다. 화면 코드에
+<code>#52664B</code> 같은 값을 직접 쓰지 않습니다.</p>
+<h3 id="31-역할별-토큰">3.1 역할별 토큰</h3>
+<table>
+<thead>
+<tr class="header">
+<th>토큰</th>
+<th>역할</th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--color-bg</code></td>
+<td>화면 바탕</td>
+<td><code>#F1EADD</code></td>
+<td><code>#0D231E</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-surface</code></td>
+<td>카드, 탭 바</td>
+<td><code>#F7F2E8</code></td>
+<td><code>#12302A</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-surface-raised</code></td>
+<td>책장 카드(타이머, 책 상세)</td>
+<td><code>#FBF8F2</code></td>
+<td><code>#12302A</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-surface-sunken</code></td>
+<td>카드 안의 작은 칸</td>
+<td><code>#F4EEE3</code></td>
+<td><code>#102B25</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-line</code></td>
+<td>기본 테두리, 구분선</td>
+<td><code>#E3D9C8</code></td>
+<td><code>#2E5247</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-line-strong</code></td>
+<td>보조 버튼 테두리</td>
+<td><code>#CFC3AE</code></td>
+<td><code>#D4B072</code> (금선)</td>
+</tr>
+<tr class="odd">
+<td><code>--color-track</code></td>
+<td>진행 막대·링의 바탕</td>
+<td><code>#EDE5D6</code></td>
+<td><code>#23463D</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-ink</code></td>
+<td>본문 글자</td>
+<td><code>#3B342C</code></td>
+<td><code>#F2EBDD</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-ink-muted</code></td>
+<td>보조 글자, 라벨</td>
+<td><code>#6B6052</code></td>
+<td><code>#A7B5AA</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-ink-strong</code></td>
+<td>큰 숫자</td>
+<td><code>#3B342C</code></td>
+<td><code>#F6E7C4</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-accent</code></td>
+<td>주 버튼, 진행, 선택된 탭</td>
+<td><code>#52664B</code></td>
+<td><code>#D4B072</code></td>
+</tr>
+<tr class="even">
+<td><code>--color-accent-strong</code></td>
+<td>눌림 상태, 링크</td>
+<td><code>#3C4C36</code></td>
+<td><code>#E9D5A6</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-accent-soft</code></td>
+<td>상태 배지 바탕</td>
+<td><code>#E4EADF</code></td>
+<td>금색 15%</td>
+</tr>
+<tr class="even">
+<td><code>--color-on-accent</code></td>
+<td>강조색 위 글자·아이콘</td>
+<td><code>#FBF8F2</code></td>
+<td><code>#0D231E</code></td>
+</tr>
+<tr class="odd">
+<td><code>--color-ribbon</code></td>
+<td>책갈피 리본</td>
+<td><code>#9C4F3D</code></td>
+<td><code>#D4B072</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-책등-색서재-화면">3.2 책등 색(서재 화면)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>토큰</th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--spine-1</code> ~ <code>--spine-6</code></td>
+<td>호두 <code>#7A5C43</code>, 리넨 <code>#C9B48A</code>, 이끼
+<code>#52664B</code>, 벽돌 <code>#9C4F3D</code>, 먹청
+<code>#4A5D73</code>, 미색 <code>#DCCDB0</code></td>
+<td>옥스블러드 <code>#5A1F24</code>, 네이비 <code>#1E3A5F</code>,
+에메랄드 <code>#1F4A3F</code>, 자두 <code>#3B2A4A</code>, 옥스블러드,
+흑단 <code>#2B2B2B</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>책을 등록하면 <code>id</code>를 바탕으로 6가지 중 하나를
+<strong>고정 배정</strong>합니다(같은 책은 항상 같은 색).</li>
+<li>종이 서재에서 리넨·미색 책등은 어두운
+글자(<code>--spine-ink-dark</code>)를, 나머지는 밝은 글자를 씁니다.</li>
+<li>시안의 호두색 <code>#8A6A4F</code>는 밝은 글자와의 대비가 4.42:1이라
+<code>#7A5C43</code>(5.5:1)로 보정했습니다.</li>
+</ul>
+<h3 id="33-대비-확인-결과wcag">3.3 대비 확인 결과(WCAG)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>조합</th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>본문 / 바탕</td>
+<td>10.2 : 1</td>
+<td>13.9 : 1</td>
+</tr>
+<tr class="even">
+<td>보조 글자 / 바탕</td>
+<td>5.1 : 1</td>
+<td>7.7 : 1</td>
+</tr>
+<tr class="odd">
+<td>강조색 / 바탕</td>
+<td>5.2 : 1</td>
+<td>8.0 : 1</td>
+</tr>
+<tr class="even">
+<td>강조색 위 글자</td>
+<td>5.9 : 1</td>
+<td>8.0 : 1</td>
+</tr>
+</tbody>
+</table>
+<p>새 색을 추가할 때도 글자는 4.5:1, 24px 이상 큰 글자와 아이콘은 3:1
+이상을 지킵니다.</p>
+<hr />
+<h2 id="4-글꼴">4. 글꼴</h2>
+<h3 id="41-글꼴-묶음">4.1 글꼴 묶음</h3>
+<table>
+<thead>
+<tr class="header">
+<th>역할</th>
+<th>토큰</th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>제목, 책 제목, 인용문</td>
+<td><code>--font-display</code></td>
+<td>Gowun Batang 400·700</td>
+<td>Noto Serif KR 600·700</td>
+</tr>
+<tr class="even">
+<td>본문, 버튼, 라벨</td>
+<td><code>--font-body</code></td>
+<td>Gowun Dodum 400</td>
+<td>IBM Plex Sans KR 400·500</td>
+</tr>
+<tr class="odd">
+<td>타이머·통계 숫자, 영문 장식</td>
+<td><code>--font-numeral</code></td>
+<td>Gowun Batang 700</td>
+<td>Cormorant Garamond 500·600, 이탤릭 500</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>모두 SIL Open Font License라 앱에 넣어 배포할 수 있습니다.</li>
+<li>오프라인 PWA이므로 Google Fonts 링크 대신 <strong>글꼴 파일을 앱에
+포함</strong>합니다(<code>@fontsource</code> 패키지 또는 woff2 직접
+포함).</li>
+<li>선택한 테마의 글꼴만 불러옵니다. 한글 글꼴은 쓰는 글자만
+남겨(subset) 테마당 300KB 이하로 줄입니다.</li>
+</ul>
+<h3 id="42-글자-크기">4.2 글자 크기</h3>
+<table>
+<thead>
+<tr class="header">
+<th>쓰임</th>
+<th>크기 / 굵기</th>
+<th>글꼴</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>타이머 숫자</td>
+<td>54px (에메랄드 66px) / 700 (600)</td>
+<td>numeral</td>
+</tr>
+<tr class="even">
+<td>큰 통계 숫자(완독일, 진행률)</td>
+<td>34~44px / 600</td>
+<td>numeral</td>
+</tr>
+<tr class="odd">
+<td>화면 제목</td>
+<td>21~22px / 700</td>
+<td>display</td>
+</tr>
+<tr class="even">
+<td>카드 제목, 책 제목</td>
+<td>17~22px / 700</td>
+<td>display</td>
+</tr>
+<tr class="odd">
+<td>섹션 제목</td>
+<td>15px / 700</td>
+<td>display</td>
+</tr>
+<tr class="even">
+<td>본문, 버튼</td>
+<td>14~15px / 400</td>
+<td>body</td>
+</tr>
+<tr class="odd">
+<td>설명, 메타 정보</td>
+<td>13px / 400</td>
+<td>body</td>
+</tr>
+<tr class="even">
+<td>라벨, 탭 이름</td>
+<td>12px / 400</td>
+<td>body</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>한글은 <code>word-break: keep-all</code>로 단어 중간에서 줄이 바뀌지
+않게 합니다.</li>
+<li>숫자가 좁은 칸에 들어갈 때는 <code>white-space: nowrap</code>을
+씁니다(예: "6시간 20분").</li>
+<li>에메랄드의 영문 장식 문구(<code>RAINY LIBRARY</code>,
+<code>NOW READING</code>, <code>THE LAST PAGE</code>)는 Cormorant
+12~13px, 자간 3~5px, 금색입니다. 이 문구는 장식이므로 같은 뜻의 한글을
+가까이에 함께 둡니다.</li>
+</ul>
+<hr />
+<h2 id="5-간격-모양-그림자">5. 간격, 모양, 그림자</h2>
+<ul>
+<li><strong>간격</strong>: 4px 단위(<code>--space-1</code> 4px ~
+<code>--space-10</code> 40px). 화면 좌우 여백 24px, 카드 안 여백
+12~20px, 요소 사이 간격 8~18px.</li>
+<li><strong>기준 화면</strong>: 390×844(휴대폰). 360px 폭까지 깨지지
+않아야 하고, 태블릿·PC에서는 가운데 최대 폭 480px으로 보여 줍니다.</li>
+<li><strong>모서리</strong> | 토큰 | 종이 서재 | 에메랄드 서재 |
+|---|---|---| | <code>--radius-md</code> (작은 칸) | 10px | 8px | |
+<code>--radius-lg</code> (카드) | 12px | 8px | |
+<code>--radius-page</code> (책장 카드) | 4px 16px 16px 4px | 3px 8px 8px
+3px | | 버튼(원형) | 50% | 50% |</li>
+<li><strong>그림자</strong>: 종이 서재는 부드러운 갈색 그림자, 에메랄드
+서재는 금빛 후광(glow)입니다. 주 버튼과 선택된 책등에만 씁니다.</li>
+</ul>
+<hr />
+<h2 id="6-아이콘">6. 아이콘</h2>
+<ul>
+<li>선 아이콘, 24×24 viewBox, 선 굵기 1.6(활성 탭 1.8), 끝
+둥글게(<code>stroke-linecap: round</code>). 색은
+<code>currentColor</code>.</li>
+<li>아이콘만 있는 버튼에는 반드시 <code>aria-label</code>을 붙이고,
+장식용 SVG에는 <code>aria-hidden="true"</code>를 붙입니다.</li>
+<li>시안에서 쓴 경로(그대로 써도 되고, Lucide 아이콘으로 바꿔도
+됩니다):</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th>이름</th>
+<th>SVG 경로</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>타이머</td>
+<td><code>&lt;circle cx="12" cy="13" r="8"/&gt;&lt;path d="M12 9v4l2.5 2.5M9 2h6"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>사운드</td>
+<td><code>&lt;path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 11v2"/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>서재</td>
+<td><code>&lt;rect x="4" y="4" width="4" height="16"/&gt;&lt;rect x="9" y="6" width="4" height="14"/&gt;&lt;path d="M15 6.5l3.8-1 3 13.5-3.8 1z"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>기록</td>
+<td><code>&lt;path d="M4 20h16M7 16v-5M12 16V7M17 16V8"/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>설정</td>
+<td><code>&lt;circle cx="12" cy="12" r="3"/&gt;&lt;path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>일시정지</td>
+<td><code>&lt;path d="M9 6v12M15 6v12"/&gt;</code> (굵기 2.4)</td>
+</tr>
+<tr class="odd">
+<td>재생</td>
+<td><code>&lt;path d="M8 5l11 7-11 7z"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>끝내기</td>
+<td><code>&lt;rect x="7" y="7" width="10" height="10" rx="1.5"/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>쉬어가기</td>
+<td><code>&lt;path d="M6 6l8 6-8 6zM18 6v12"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>빗소리</td>
+<td><code>&lt;path d="M7 14h10a3.5 3.5 0 0 0 .5-7A5 5 0 0 0 8 6.5 3.75 3.75 0 0 0 7 14z"/&gt;&lt;path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>장작</td>
+<td><code>&lt;path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-4 2.5-5 0 2 1 3 2 3 0-3-1-5.5.5-8z"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>카페</td>
+<td><code>&lt;path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h1.5a2.5 2.5 0 0 1 0 5H16M8 3v3M11 3v3"/&gt;</code></td>
+</tr>
+<tr class="odd">
+<td>음악</td>
+<td><code>&lt;path d="M9 18V6l10-2v12"/&gt;&lt;circle cx="7" cy="18" r="2"/&gt;&lt;circle cx="17" cy="16" r="2"/&gt;</code></td>
+</tr>
+<tr class="even">
+<td>추가</td>
+<td><code>&lt;path d="M12 5v14M5 12h14"/&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-공통-부품">7. 공통 부품</h2>
+<p>두 테마가 <strong>같은 마크업</strong>을 쓰고 토큰만 바뀌는
+부품입니다.</p>
+<table>
+<thead>
+<tr class="header">
+<th>부품</th>
+<th>규칙</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>하단 탭 바</strong></td>
+<td>4칸 균등(타이머·사운드·서재·기록), 칸당 높이 52px 이상, 아이콘 22px
++ 라벨 12px. 선택된 칸은 <code>--color-accent</code> + 굵게. 에메랄드는
+라벨 아래 5px 금색 마름모를 추가로 표시합니다. 종이는 위쪽 1px 구분선과
+<code>--color-surface</code> 바탕, 에메랄드는 바탕 없음.</td>
+</tr>
+<tr class="even">
+<td><strong>주 버튼(재생/일시정지)</strong></td>
+<td>지름 72px(에메랄드 76px) 원, <code>--color-accent</code> 바탕,
+<code>--color-on-accent</code> 아이콘,
+<code>--shadow-primary</code>.</td>
+</tr>
+<tr class="odd">
+<td><strong>보조 원형 버튼</strong></td>
+<td>지름 52px, 1px <code>--color-line-strong</code> 테두리, 투명 또는
+<code>--color-surface</code> 바탕. 아래에 12px 라벨(종이) 또는 라벨 생략
++ <code>aria-label</code>(에메랄드).</td>
+</tr>
+<tr class="even">
+<td><strong>텍스트 버튼·링크</strong></td>
+<td><code>--color-accent</code>(종이) /
+<code>--color-accent-strong</code>(에메랄드), 높이 44px.</td>
+</tr>
+<tr class="odd">
+<td><strong>필터 칩</strong></td>
+<td>높이 36px, 둥근 알약 모양. 선택: <code>--color-ink</code> 바탕 +
+<code>--color-surface</code> 글자. 미선택: 1px 테두리.</td>
+</tr>
+<tr class="even">
+<td><strong>진행 막대</strong></td>
+<td>높이 8px(종이) / 3px(에메랄드), 바탕 <code>--color-track</code>,
+채움 <code>--color-accent</code>.</td>
+</tr>
+<tr class="odd">
+<td><strong>통계 칸</strong></td>
+<td>라벨(12px, muted) + 값(16~24px, numeral). 종이는
+<code>--color-surface-sunken</code> 둥근 칸 3개, 에메랄드는 위아래 선과
+세로 구분선으로 나눈 3칸.</td>
+</tr>
+<tr class="even">
+<td><strong>상태 배지</strong></td>
+<td>"읽는 중" 등. <code>--color-accent-soft</code> 바탕,
+<code>--color-accent-strong</code> 글자, 12px.</td>
+</tr>
+<tr class="odd">
+<td><strong>바텀 시트</strong>(세션 종료, 책 추가)</td>
+<td>위쪽 모서리 16px, <code>--color-surface-raised</code> 바탕, 손잡이
+막대 36×4px, 배경 어둡게 40%.</td>
+</tr>
+<tr class="even">
+<td><strong>입력칸</strong>(쪽수 등)</td>
+<td>높이 48px, 숫자 키패드(<code>inputmode="numeric"</code>), 옆에 −/+
+버튼(44px), 반드시 <code>&lt;label&gt;</code> 연결.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-테마-전용-부품">8. 테마 전용 부품</h2>
+<p>모양이 크게 달라 <strong>테마마다 따로 그리는</strong> 부품
+4종입니다. 데이터와 동작은 공통 훅에서 받고, 부품은 그리기만 합니다.</p>
+<pre class="tsx"><code>// 화면에서는 공통 이름으로 씁니다.
+&lt;TimerFace remainingSec={1122} totalSec={1500} round={2} rounds={4} phase=&quot;focus&quot; /&gt;
+&lt;SoundControls layers={layers} onChange={setVolume} /&gt;
+&lt;FinishCard date=&quot;2026-11-14&quot; remainingMin={241} /&gt;
+&lt;BookSpine book={book} selected /&gt;
+// 실제로 그려지는 것은 현재 테마의 variants/paper/* 또는 variants/emerald/* 입니다.</code></pre>
+<h3 id="81-타이머-표시-timerface">8.1 타이머 표시
+<code>TimerFace</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>바탕</td>
+<td>책장 카드(<code>--radius-page</code>) 뒤로 종이 2장이 4px, 8px씩
+비켜 겹쳐 보임</td>
+<td>카드 없음, 화면 바탕 위에 바로 다이얼</td>
+</tr>
+<tr class="even">
+<td>장식</td>
+<td>오른쪽 위에 책갈피 리본(22×78px, 아래가 V자로 파임,
+<code>--color-ribbon</code>)</td>
+<td>바깥 금선 원 → 1분 눈금(60개) → 5분 굵은 눈금(12개) → 진행 링 → 안쪽
+원판, 12시 방향 금색 마름모</td>
+</tr>
+<tr class="odd">
+<td>링</td>
+<td>지름 208px, 굵기 7px, 둥근 끝 + 안쪽 점선 원</td>
+<td>지름 268px, 진행 링 굵기 3px</td>
+</tr>
+<tr class="even">
+<td>글자</td>
+<td>위: "집중 시간 · 2 / 4회차" / 가운데: 18:42 / 아래: "남은 시간 /
+25분" + 책 속 한 문장(선택)</td>
+<td>위: <code>FOCUS · II / IV</code>(로마 숫자) / 가운데: 18:42 / 아래:
+"남은 시간"</td>
+</tr>
+<tr class="odd">
+<td>휴식 중</td>
+<td>링 색을 <code>--color-ink-muted</code>로, 라벨 "쉬는 시간"</td>
+<td>링 색을 <code>--color-accent-strong</code>으로, 라벨
+<code>REST</code></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>진행 링은 SVG <code>circle</code>의 <code>stroke-dasharray</code>로
+그리고, 12시 방향에서 시계 방향으로 채웁니다.</li>
+<li>숫자는 1초마다 바뀌지만 링은 부드럽게 움직이지 않아도 됩니다(배터리
+절약). <code>prefers-reduced-motion</code>이면 전환 효과를 끕니다.</li>
+<li>숫자에는 <code>font-variant-numeric: tabular-nums</code>를 써서
+1초마다 글자 폭이 흔들리지 않게 합니다.</li>
+</ul>
+<h3 id="82-환경음-컨트롤-soundcontrols">8.2 환경음 컨트롤
+<code>SoundControls</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>홈 화면(요약)</td>
+<td>3칸 카드: 아이콘 + 이름 / 가는 막대(4px) / 퍼센트</td>
+<td>원형 메달 4개(빗소리·장작·카페·음악): 지름 62px 원판 + 둘레 금색
+호가 음량, 아래에 "빗소리 60"</td>
+</tr>
+<tr class="even">
+<td>사운드 탭(전체)</td>
+<td>소리마다 한 줄: 아이콘, 이름, 켜기 스위치, 가로 슬라이더</td>
+<td>소리마다 큰 메달(지름 88px) 2열 배치, 메달을 누르면 켜기/끄기, 아래
+슬라이더</td>
+</tr>
+<tr class="odd">
+<td>꺼진 소리</td>
+<td>글자 <code>--color-ink-muted</code>, 막대 비움</td>
+<td>메달 투명도 50%, 호 없음</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>슬라이더는 반드시 <code>&lt;input type="range"&gt;</code>로 만들고
+<code>aria-label="빗소리 음량"</code>과 같은 이름을 붙입니다(모양만
+바꾸고 기본 요소는 유지).</li>
+</ul>
+<h3 id="83-완독-예상일-카드-finishcard">8.3 완독 예상일 카드
+<code>FinishCard</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모양</td>
+<td>책 상세 카드 아래쪽, 점선 구분선 위에 한 줄 배치</td>
+<td>독립 카드, 위쪽 가운데에서 금색 책갈피가 내려옴</td>
+</tr>
+<tr class="even">
+<td>내용</td>
+<td>왼쪽 책갈피 아이콘(30×38) / "완독 예상일" / <strong>11월 14일
+(토)</strong> / "지금 속도라면 약 4시간 더 읽으면 마지막 장을
+덮어요."</td>
+<td><code>THE LAST PAGE</code> / <strong>11 · 14</strong> (Cormorant
+44px) / "11월 14일 토요일, 완독 예상" / "지금 속도라면 약 4시간
+남았어요"</td>
+</tr>
+<tr class="odd">
+<td>기록 부족 시</td>
+<td>"기록이 3번 쌓이면 완독일을 알려 드릴게요"</td>
+<td>같은 문장, 숫자 자리에 <code>— · —</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="84-책등-bookspine">8.4 책등 <code>BookSpine</code></h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>모양</td>
+<td>단색 천 장정, 왼쪽 4px 그늘(inset)</td>
+<td>가죽 장정 + 위·아래 금박 이중 띠</td>
+</tr>
+<tr class="even">
+<td>크기</td>
+<td>폭 26~42px, 높이 86~128px(전체 쪽수에 비례해 폭, <code>id</code>에
+따라 높이 변화)</td>
+<td>같음</td>
+</tr>
+<tr class="odd">
+<td>글자</td>
+<td>세로쓰기(<code>writing-mode: vertical-rl</code>), 12px, 자간
+2px</td>
+<td>같음, 금빛 글자</td>
+</tr>
+<tr class="even">
+<td>선택된 책</td>
+<td>10px 위로 올라오고 <code>--shadow-lifted</code></td>
+<td>10px 위로 + 1px 금 테두리 + 금빛 후광</td>
+</tr>
+<tr class="odd">
+<td>선반</td>
+<td>10px 나무 판 + 아래 4px 그림자</td>
+<td>2px 금선 + 6px 어두운 그림자</td>
+</tr>
+<tr class="even">
+<td>마지막 책</td>
+<td>8° 기울여 기대 놓기(책이 6권 이상일 때)</td>
+<td>기울이지 않음(정돈된 느낌)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9-테마별-화면-장식">9. 테마별 화면 장식</h2>
+<table>
+<thead>
+<tr class="header">
+<th>장식</th>
+<th>종이 서재</th>
+<th>에메랄드 서재</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>화면 테두리</td>
+<td>없음</td>
+<td>화면 안쪽 10px, 15px 위치에 금 이중선(투명도 45%, 20%).
+<code>--frame-display</code>로 켜고 끔. 클릭을 막지 않도록
+<code>pointer-events: none</code></td>
+</tr>
+<tr class="even">
+<td>머리말</td>
+<td>왼쪽 정렬 "빗소리 서재" + 오늘의 한 줄("금요일 저녁, 창밖엔
+비")</td>
+<td>가운데 <code>RAINY LIBRARY</code> + "빗소리 서재" + 선─마름모─선
+장식</td>
+</tr>
+<tr class="odd">
+<td>책 제목 표기</td>
+<td>데미안</td>
+<td>『데미안』</td>
+</tr>
+<tr class="even">
+<td>영문 부제</td>
+<td>사용 안 함</td>
+<td>Cormorant 이탤릭(예: <em>Hermann Hesse — 120쪽부터</em>)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>"오늘의 한 줄"은 요일과 시간대(아침·오후·저녁·밤)에 따라 미리 정한
+문장 중 하나를 보여 줍니다. 날씨 정보는 쓰지 않습니다(오프라인
+우선).</li>
+</ul>
+<hr />
+<h2 id="10-테마-전환">10. 테마 전환</h2>
+<ul>
+<li>설정 &gt; 테마: 미리보기 카드 3개(종이 서재 / 에메랄드 서재 / 자동).
+카드는 실제 토큰으로 그린 작은 타이머 그림입니다.</li>
+<li>바꾸면 즉시 <code>&lt;html data-theme="…"&gt;</code>가 바뀌고, 색은
+200ms 동안 부드럽게 넘어갑니다. 진행 중인 타이머와 소리는 그대로
+유지됩니다.</li>
+<li>자동 모드는 <code>prefers-color-scheme</code>(기본) 또는 지정
+시각(19:00~07:00)을 따릅니다. 앱을 쓰는 도중에는 갑자기 바뀌지 않게,
+<strong>앱을 다시 열거나 화면으로 돌아올 때만</strong> 다시
+계산합니다.</li>
+<li>저장된 테마는 <code>index.html</code>의 인라인 스크립트로 첫 화면
+전에 적용합니다(깜빡임 방지). 이 값은 IndexedDB보다 빨리 읽을 수 있도록
+<code>localStorage</code>에도 함께 저장합니다.</li>
+<li><code>&lt;meta name="theme-color"&gt;</code>를
+<code>--theme-color-meta</code> 값으로 바꿉니다.</li>
+</ul>
+<hr />
+<h2 id="11-움직임">11. 움직임</h2>
+<table>
+<thead>
+<tr class="header">
+<th>상황</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>버튼 누름</td>
+<td>0.97배로 줄어들기, 150ms</td>
+</tr>
+<tr class="even">
+<td>바텀 시트</td>
+<td>아래에서 올라오기, 200ms, <code>--ease-out</code></td>
+</tr>
+<tr class="odd">
+<td>집중 ↔︎ 휴식 전환</td>
+<td>링 색이 400ms 동안 바뀜 + 소리 페이드(PRD T-07)</td>
+</tr>
+<tr class="even">
+<td>완독</td>
+<td>종이: 책갈피 리본이 내려오는 효과 / 에메랄드: 금박 마름모가 반짝이는
+효과(1회, 1초 이내)</td>
+</tr>
+</tbody>
+</table>
+<p>움직임 줄이기 설정(<code>prefers-reduced-motion</code>)이 켜져 있으면
+모든 효과를 끕니다.</p>
+<hr />
+<h2 id="12-글쓰기화면-문구">12. 글쓰기(화면 문구)</h2>
+<ul>
+<li>존댓말, 짧고 따뜻하게. 예: "기록이 더 쌓이면 알려 드릴게요", "마지막
+장을 덮어요".</li>
+<li>숫자 단위는 붙여 씁니다: 142쪽, 25분, 0.44쪽/분. 시간은 "6시간
+20분"(에메랄드의 큰 숫자 칸은 <code>6h 20m</code> 허용).</li>
+<li>날짜: "11월 14일 (토)". 에메랄드의 장식 숫자는
+<code>11 · 14</code>.</li>
+<li>버튼은 동사로: 시작하기, 끝내기, 쉬어가기, 책 추가.</li>
+</ul>
+<hr />
+<h2 id="13-하지-말-것">13. 하지 말 것</h2>
+<ul>
+<li>화면 코드에 색상값·글꼴 이름을 직접 쓰기(반드시 토큰 사용)</li>
+<li>테마 전용 부품 안에 저장·계산 로직 넣기(공통 훅에만)</li>
+<li>그라데이션 배경, 이모지 아이콘, 왼쪽 굵은 색 띠 카드</li>
+<li><code>div</code>에 <code>onClick</code>만 달아 버튼 흉내 내기(반드시
+<code>&lt;button&gt;</code>)</li>
+<li>에메랄드 테마에서 금색을 넓은 면에 칠하기(금색은 선, 글자, 주 버튼
+하나에만)</li>
+<li>휴대폰 상태 표시줄(시계·배터리)을 화면에 그려 넣기</li>
+</ul>
+</main>
+<button id="totop" aria-label="맨 위로">↑</button>
+<script>
+(function(){
+  var body=document.body, nav=document.getElementById('sidebar'), btn=document.getElementById('toggle');
+  function setNav(open){body.classList.toggle('nav-open',open);btn.setAttribute('aria-expanded',open);btn.textContent=open?'✕':'☰';}
+  btn.onclick=function(){setNav(!body.classList.contains('nav-open'));};
+  document.getElementById('backdrop').onclick=function(){setNav(false);};
+  var links=[].slice.call(nav.querySelectorAll('a[href^="#"]'));
+  links.forEach(function(a){a.addEventListener('click',function(){if(innerWidth<=900)setNav(false);});});
+  var targets=links.map(function(a){return document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));});
+  var prog=document.getElementById('progress'), totop=document.getElementById('totop');
+  totop.onclick=function(){scrollTo({top:0,behavior:'smooth'});};
+  function onScroll(){
+    var y=scrollY+80, cur=-1;
+    targets.forEach(function(t,i){if(t&&t.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){a.classList.toggle('active',i===cur);});
+    nav.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});
+    if(cur>=0){
+      var li=links[cur].parentElement;
+      while(li&&li!==nav){if(li.tagName==='LI')li.classList.add('open');li=li.parentElement;}
+      if(links[cur].parentElement.querySelector('ul'))links[cur].parentElement.classList.add('open');
+      var a=links[cur], r=a.getBoundingClientRect();
+      if(r.top<60||r.bottom>innerHeight-40)a.scrollIntoView({block:'nearest'});
+    }
+    var h=document.documentElement.scrollHeight-innerHeight;
+    prog.style.transform='scaleX('+(h>0?scrollY/h:0)+')';
+    totop.classList.toggle('show',scrollY>600);
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

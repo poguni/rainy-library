@@ -1,0 +1,159 @@
+/* ==========================================================================
+   빗소리 서재(Rainy Library) 디자인 토큰
+   - 화면 코드에서는 색상값을 직접 쓰지 말고 아래 변수만 참조합니다.
+   - <html data-theme="paper"> 또는 <html data-theme="emerald">로 테마를 바꿉니다.
+   - 자세한 사용 규칙: docs/DESIGN.md
+   ========================================================================== */
+
+/* ---------- 공통(테마와 무관) ---------- */
+:root {
+  /* 간격: 4px 단위 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  /* 글자 크기 */
+  --text-xs: 12px;   /* 보조 라벨 */
+  --text-sm: 13px;   /* 설명, 메타 정보 */
+  --text-md: 15px;   /* 본문, 섹션 제목 */
+  --text-lg: 17px;   /* 카드 제목 */
+  --text-xl: 21px;   /* 화면 제목 */
+  --text-2xl: 28px;
+  --text-timer: 54px;
+
+  /* 크기 */
+  --touch-min: 44px;
+  --tabbar-height: 72px;
+  --screen-pad-x: 24px;
+
+  /* 움직임 */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-slow: 400ms;
+}
+
+/* ---------- 종이 서재 (A안, 기본값) ---------- */
+:root,
+:root[data-theme="paper"] {
+  color-scheme: light;
+
+  /* 바탕과 면 */
+  --color-bg: #F1EADD;             /* 화면 바탕(종이) */
+  --color-surface: #F7F2E8;        /* 카드, 탭 바 */
+  --color-surface-raised: #FBF8F2; /* 책장(타이머 카드, 책 상세) */
+  --color-surface-sunken: #F4EEE3; /* 카드 안의 작은 칸 */
+  --color-line: #E3D9C8;           /* 기본 테두리 */
+  --color-line-strong: #CFC3AE;    /* 보조 버튼 테두리 */
+  --color-track: #EDE5D6;          /* 진행 막대·링의 바탕 */
+
+  /* 글자 */
+  --color-ink: #3B342C;            /* 본문 10.2:1 */
+  --color-ink-muted: #6B6052;      /* 보조 글자 5.1:1 */
+  --color-ink-strong: #3B342C;     /* 강조 숫자 */
+
+  /* 강조 */
+  --color-accent: #52664B;         /* 이끼색: 주 버튼, 진행, 선택 탭 */
+  --color-accent-strong: #3C4C36;  /* 눌림, 강조 글자 */
+  --color-accent-soft: #E4EADF;    /* 상태 배지 바탕 */
+  --color-accent-tint: #C9D3C2;    /* 그래프의 보조 막대 */
+  --color-on-accent: #FBF8F2;      /* 강조색 위 글자 5.9:1 */
+  --color-ribbon: #9C4F3D;         /* 책갈피 리본 */
+
+  /* 서재 */
+  --color-shelf: #A88763;
+  --color-shelf-shadow: #8A6A4F;
+  --spine-1: #7A5C43;  /* 호두나무 */
+  --spine-2: #C9B48A;  /* 리넨 (어두운 글자) */
+  --spine-3: #52664B;  /* 이끼 */
+  --spine-4: #9C4F3D;  /* 벽돌 */
+  --spine-5: #4A5D73;  /* 먹청 */
+  --spine-6: #DCCDB0;  /* 미색 (어두운 글자) */
+  --spine-ink-light: #F7F2E8;
+  --spine-ink-dark: #3B342C;
+
+  /* 글꼴 */
+  --font-display: "Gowun Batang", "Nanum Myeongjo", serif;
+  --font-body: "Gowun Dodum", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --font-numeral: "Gowun Batang", serif;
+
+  /* 모양 */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-page: 4px 16px 16px 4px;  /* 책장: 왼쪽은 제본, 오른쪽은 둥글게 */
+  --radius-pill: 999px;
+  --shadow-primary: 0 6px 16px rgba(82, 102, 75, 0.28);
+  --shadow-lifted: 0 8px 14px rgba(59, 52, 44, 0.25);
+  --frame-display: none;             /* 에메랄드의 금 테두리는 사용 안 함 */
+
+  --theme-color-meta: #F1EADD;       /* <meta name="theme-color"> */
+}
+
+/* ---------- 에메랄드 서재 (B안) ---------- */
+:root[data-theme="emerald"] {
+  color-scheme: dark;
+
+  --color-bg: #0D231E;             /* 에메랄드 가죽 */
+  --color-surface: #12302A;
+  --color-surface-raised: #12302A;
+  --color-surface-sunken: #102B25;
+  --color-line: #2E5247;
+  --color-line-strong: #D4B072;    /* 보조 버튼은 금선 */
+  --color-track: #23463D;
+
+  --color-ink: #F2EBDD;            /* 상아색 13.9:1 */
+  --color-ink-muted: #A7B5AA;      /* 7.7:1 */
+  --color-ink-strong: #F6E7C4;     /* 금빛 상아: 큰 숫자 */
+  --color-ink-soft: #C2CDC4;       /* 이탤릭 부제 */
+
+  --color-accent: #D4B072;         /* 금박 8.0:1 */
+  --color-accent-strong: #E9D5A6;  /* 링크, 아이콘 */
+  --color-accent-soft: rgba(212, 176, 114, 0.15);
+  --color-accent-tint: #2A4C42;
+  --color-on-accent: #0D231E;      /* 금색 버튼 위 글자 8.0:1 */
+  --color-ribbon: #D4B072;
+
+  --color-shelf: #D4B072;          /* 금선 선반 */
+  --color-shelf-shadow: #081812;
+  --spine-1: #5A1F24;  /* 옥스블러드 */
+  --spine-2: #1E3A5F;  /* 네이비 */
+  --spine-3: #1F4A3F;  /* 에메랄드 */
+  --spine-4: #3B2A4A;  /* 자두 */
+  --spine-5: #5A1F24;
+  --spine-6: #2B2B2B;  /* 흑단 */
+  --spine-ink-light: #E9D5A6;
+  --spine-ink-dark: #E9D5A6;
+
+  --font-display: "Noto Serif KR", serif;
+  --font-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", sans-serif;
+  --font-numeral: "Cormorant Garamond", "Noto Serif KR", serif;
+  --text-timer: 66px;              /* Cormorant는 글자가 작아 보여 키움 */
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 8px;
+  --radius-page: 3px 8px 8px 3px;
+  --shadow-primary: 0 0 0 6px rgba(212, 176, 114, 0.15), 0 10px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lifted: 0 0 22px rgba(212, 176, 114, 0.3);
+  --frame-display: block;          /* 화면 둘레 금 이중선 */
+
+  --theme-color-meta: #0D231E;
+}
+
+/* ---------- 공통 기본 스타일 ---------- */
+html {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+}

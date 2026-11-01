@@ -1,0 +1,35 @@
+@import 'tailwindcss';
+@import './theme/tokens.css';
+
+/* Tailwind 기본 색·글꼴은 끄고, 토큰 변수에만 연결합니다. */
+@theme inline reference {
+  --color-*: initial;
+  --font-*: initial;
+
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-surface-sunken: var(--color-surface-sunken);
+  --color-line: var(--color-line);
+  --color-line-strong: var(--color-line-strong);
+  --color-track: var(--color-track);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-strong: var(--color-ink-strong);
+  --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-accent-tint: var(--color-accent-tint);
+  --color-on-accent: var(--color-on-accent);
+  --color-ribbon: var(--color-ribbon);
+
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-numeral: var(--font-numeral);
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  word-break: keep-all;
+}
