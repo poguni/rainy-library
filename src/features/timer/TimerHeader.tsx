@@ -2,20 +2,33 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { todayLine } from '../../lib/time';
 
-/** 종이 서재 머리말: "빗소리 서재" + 오늘의 한 줄 + 설정 버튼 */
+/** 머리말(DESIGN.md 9장). 종이: 왼쪽 "빗소리 서재" + 오늘의 한 줄 / 에메랄드: 가운데 RAINY LIBRARY + 선─마름모─선 */
 export function TimerHeader() {
   // 화면을 열 때 한 번만 정합니다(쓰는 도중에 문장이 바뀌지 않게).
   const [line] = useState(() => todayLine(new Date()));
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-col gap-0.5">
-        <h1 className="font-display text-xl font-bold tracking-[-0.3px]">빗소리 서재</h1>
-        <div className="text-sm text-ink-muted">{line}</div>
+    <div className="relative flex items-center justify-between emerald:justify-center">
+      <div className="flex flex-col gap-0.5 emerald:items-center emerald:gap-1">
+        <div
+          aria-hidden="true"
+          className="hidden font-numeral text-[13px] font-semibold tracking-[5px] text-accent emerald:block"
+        >
+          RAINY LIBRARY
+        </div>
+        <h1 className="font-display text-xl font-bold tracking-[-0.3px] emerald:text-[19px] emerald:font-semibold emerald:tracking-[2px]">
+          빗소리 서재
+        </h1>
+        <div className="text-sm text-ink-muted emerald:hidden">{line}</div>
+        <div aria-hidden="true" className="mt-1 hidden items-center gap-2 emerald:flex">
+          <span className="h-px w-[54px] bg-accent opacity-60" />
+          <span className="size-[7px] rotate-45 bg-accent" />
+          <span className="h-px w-[54px] bg-accent opacity-60" />
+        </div>
       </div>
       <Link
         to="/stats/settings"
         aria-label="설정"
-        className="flex size-11 items-center justify-center rounded-full border border-line-strong bg-surface text-ink"
+        className="flex size-11 items-center justify-center rounded-full border border-line-strong bg-surface text-ink emerald:absolute emerald:top-0 emerald:right-0 emerald:bg-transparent emerald:text-accent-strong"
       >
         <svg
           width="20"

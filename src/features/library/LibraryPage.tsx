@@ -21,7 +21,15 @@ export function LibraryPage() {
   return (
     <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-xl font-bold">내 서재</h1>
+        <div className="flex flex-col gap-0.5">
+          <div
+            aria-hidden="true"
+            className="hidden font-numeral text-[16px] text-accent italic emerald:block"
+          >
+            The Collection
+          </div>
+          <h1 className="font-display text-xl font-bold emerald:text-[22px]">내 서재</h1>
+        </div>
         <button
           type="button"
           onClick={() => setAdding(true)}

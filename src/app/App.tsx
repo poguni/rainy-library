@@ -25,6 +25,7 @@ export default function App() {
           </Routes>
         </main>
         <TabBar />
+        <div aria-hidden="true" className="screen-frame" />
       </div>
     </TimerProvider>
   );

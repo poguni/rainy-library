@@ -12,7 +12,7 @@ export function TabBar() {
   return (
     <nav
       aria-label="주요 화면"
-      className="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] border-t border-line bg-surface print:hidden"
+      className="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] border-t border-line bg-surface print:hidden emerald:border-t-0 emerald:bg-bg emerald:px-[22px] emerald:pb-2"
     >
       <ul className="grid grid-cols-4">
         {tabs.map((tab) => (
@@ -29,6 +29,12 @@ export function TabBar() {
                 <>
                   <TabIcon name={tab.icon} active={isActive} />
                   <span>{tab.label}</span>
+                  {isActive && (
+                    <span
+                      aria-hidden="true"
+                      className="hidden size-[5px] rotate-45 bg-accent emerald:block"
+                    />
+                  )}
                 </>
               )}
             </NavLink>

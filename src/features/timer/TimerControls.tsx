@@ -34,12 +34,12 @@ function Secondary(props: { label: string; onClick: () => void; children: ReactN
       <button
         type="button"
         onClick={props.onClick}
-        className="press flex size-[52px] items-center justify-center rounded-full border border-line-strong bg-surface text-ink"
+        className="press flex size-[52px] items-center justify-center rounded-full border border-line-strong bg-surface text-ink emerald:bg-transparent emerald:text-accent-strong"
       >
         {props.children}
         <span className="sr-only">{props.label}</span>
       </button>
-      <div aria-hidden="true" className="text-xs text-ink-muted">
+      <div aria-hidden="true" className="text-xs text-ink-muted emerald:hidden">
         {props.label}
       </div>
     </div>
@@ -56,7 +56,7 @@ export function TimerControls(p: Props) {
         : { label: '다시 시작', onClick: p.onResume, d: <path d="M8 5l11 7-11 7z" />, w: 1.8 };
 
   return (
-    <div className="flex items-start justify-center gap-[34px]">
+    <div className="flex items-start justify-center gap-[34px] emerald:items-center emerald:gap-[30px]">
       {p.state !== 'idle' && (
         <Secondary label="끝내기" onClick={p.onEnd}>
           {icon(<rect x="7" y="7" width="10" height="10" rx="1.5" />, 1.8)}
@@ -67,7 +67,7 @@ export function TimerControls(p: Props) {
           type="button"
           onClick={primary.onClick}
           disabled={p.disabled}
-          className="press flex size-[72px] items-center justify-center rounded-full bg-accent text-on-accent shadow-[var(--shadow-primary)] disabled:opacity-50"
+          className="press flex size-[72px] items-center justify-center rounded-full bg-accent text-on-accent shadow-[var(--shadow-primary)] disabled:opacity-50 emerald:size-[76px]"
         >
           <svg
             width="28"
@@ -84,7 +84,7 @@ export function TimerControls(p: Props) {
           </svg>
           <span className="sr-only">{primary.label}</span>
         </button>
-        <div aria-hidden="true" className="text-xs text-ink">
+        <div aria-hidden="true" className="text-xs text-ink emerald:hidden">
           {primary.label}
         </div>
       </div>

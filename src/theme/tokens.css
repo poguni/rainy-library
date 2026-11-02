@@ -95,6 +95,7 @@
   --shadow-primary: 0 6px 16px rgba(82, 102, 75, 0.28);
   --shadow-lifted: 0 8px 14px rgba(59, 52, 44, 0.25);
   --frame-display: none; /* 에메랄드의 금 테두리는 사용 안 함 */
+  --color-ink-soft: var(--color-ink-muted); /* 에메랄드의 이탤릭 부제 자리(종이는 보조 글자와 같음) */
 
   --theme-color-meta: #f1eadd; /* <meta name="theme-color"> */
 }

@@ -1,6 +1,6 @@
-/* 종이 서재 글꼴(SIL Open Font License). scripts/subset-fonts.py로 한글 2,350자 등만 남긴 woff2.
+/* 두 테마의 글꼴(SIL Open Font License). scripts/subset-fonts.py로 한글 2,350자 등만 남긴 woff2.
    이름은 tokens.css의 --font-display / --font-body / --font-numeral과 같아야 합니다.
-   에메랄드 글꼴은 8단계에서 추가합니다. 브라우저는 지금 테마가 쓰는 글꼴만 내려받습니다. */
+   브라우저는 지금 테마가 쓰는 글꼴만 내려받습니다(오프라인용으로는 서비스 워커가 모두 캐시). */
 @font-face {
   font-family: 'Gowun Batang';
   font-weight: 400;
@@ -21,4 +21,42 @@
   font-style: normal;
   font-display: swap;
   src: url('../assets/fonts/gowun-dodum-400.woff2') format('woff2');
+}
+
+/* ---------- 에메랄드 서재 ---------- */
+/* 본명조는 600 한 벌만 넣고 700에도 씁니다(용량). 굵기 범위를 적어 두면 브라우저가 가짜 굵게를 만들지 않습니다. */
+@font-face {
+  font-family: 'Noto Serif KR';
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/noto-serif-kr-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans KR';
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-kr-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/cormorant-garamond-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/cormorant-garamond-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+  src: url('../assets/fonts/cormorant-garamond-italic-500.woff2') format('woff2');
 }

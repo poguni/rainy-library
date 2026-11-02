@@ -2,6 +2,10 @@
 @import './theme/tokens.css';
 @import './theme/fonts.css';
 
+/* 테마별 화면 장식(DESIGN.md 9장)에만 씁니다: emerald:hidden, paper:hidden 등 */
+@custom-variant emerald (&:where([data-theme='emerald'], [data-theme='emerald'] *));
+@custom-variant paper (&:where([data-theme='paper'], [data-theme='paper'] *));
+
 /* Tailwind 기본 색·글꼴은 끄고, 토큰 변수에만 연결합니다. */
 @theme inline reference {
   --color-*: initial;
@@ -17,6 +21,7 @@
   --color-ink: var(--color-ink);
   --color-ink-muted: var(--color-ink-muted);
   --color-ink-strong: var(--color-ink-strong);
+  --color-ink-soft: var(--color-ink-soft);
   --color-accent: var(--color-accent);
   --color-accent-strong: var(--color-accent-strong);
   --color-accent-soft: var(--color-accent-soft);
@@ -93,4 +98,41 @@ body {
   .print-doc thead {
     display: table-header-group; /* 쪽이 넘어가도 머리글 반복 */
   }
+}
+
+/* 에메랄드: 화면 안쪽 10px·15px 위치의 금 이중선(DESIGN.md 9장). --frame-display로 켜고 끕니다. */
+.screen-frame {
+  display: var(--frame-display);
+  position: fixed;
+  inset: 0;
+  margin: 0 auto;
+  max-width: 480px;
+  pointer-events: none;
+  z-index: 30;
+}
+.screen-frame::before,
+.screen-frame::after {
+  content: '';
+  position: absolute;
+  border: 1px solid var(--color-accent);
+}
+.screen-frame::before {
+  inset: 10px;
+  opacity: 0.45;
+  border-radius: 6px;
+}
+.screen-frame::after {
+  inset: 15px;
+  opacity: 0.2;
+  border-radius: 4px;
+}
+@media print {
+  .screen-frame {
+    display: none;
+  }
+}
+
+/* Cormorant는 기본 숫자가 들쭉날쭉한 옛 숫자라, 에메랄드에서는 높이가 고른 숫자로 씁니다. */
+:root[data-theme='emerald'] .font-numeral {
+  font-feature-settings: 'lnum' 1;
 }

@@ -58,8 +58,8 @@ Web Audio로 직접 합성해도 됩니다(파일 없이). 그 경우 이 항목
 |---|---|---|---|
 | 종이 서재 | Gowun Batang | 400, 700 | `@fontsource/gowun-batang` |
 | 종이 서재 | Gowun Dodum | 400 | `@fontsource/gowun-dodum` |
-| 에메랄드 서재 | Noto Serif KR | 600, 700 | `@fontsource/noto-serif-kr` |
-| 에메랄드 서재 | IBM Plex Sans KR | 400, 500 | `@fontsource/ibm-plex-sans-kr` |
+| 에메랄드 서재 | Noto Serif KR | 600, 700 → **600만 넣음**(700 자리에도 600, 용량 −345KB) | `@fontsource/noto-serif-kr` |
+| 에메랄드 서재 | IBM Plex Sans KR | 400, 500 → **400만 넣음**(용량 −124KB) | `@fontsource/ibm-plex-sans-kr` |
 | 에메랄드 서재 | Cormorant Garamond | 500, 600, 이탤릭 500 | `@fontsource/cormorant-garamond` |
 
 - 패키지가 없거나 용량이 크면 Google Fonts에서 받아 필요한 글자만 남깁니다(`pyftsubset` 또는 `glyphhanger`). 기준: 한글 완성형 2,350자 + 영문·숫자·문장 부호.
@@ -87,5 +87,5 @@ Web Audio로 직접 합성해도 됩니다(파일 없이). 그 경우 이 항목
 ## 5. 준비 체크리스트
 - [ ] 환경음 3종(rain, fire, cafe) — ogg + m4a, 반복 처리, 출처 기록
 - [ ] 알림음 2종 또는 코드 합성 결정
-- [ ] 글꼴 패키지 설치 또는 woff2 준비
+- [x] 글꼴 패키지 설치 또는 woff2 준비 (Google Fonts 원본 → `scripts/subset-fonts.py`, 종이 506KB / 에메랄드 약 510KB)
 - [ ] 앱 아이콘 5종

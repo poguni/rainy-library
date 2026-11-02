@@ -18,7 +18,10 @@ export function SessionResultSheet({ session, book, finished, onClose }: Props) 
   const { finish, speedText } = useBookReading(book);
 
   return (
-    <BottomSheet title={finished ? '마지막 장을 덮었어요' : '오늘도 한 장 넘겼어요'} onClose={onClose}>
+    <BottomSheet
+      title={finished ? '마지막 장을 덮었어요' : '오늘도 한 장 넘겼어요'}
+      onClose={onClose}
+    >
       <div className="mt-4 flex flex-col gap-4">
         {finished && (
           <div className="relative flex flex-col gap-1 overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface px-4 pt-4 pb-4">
@@ -33,7 +36,8 @@ export function SessionResultSheet({ session, book, finished, onClose }: Props) 
             </svg>
             <p className="pr-10 font-display text-lg font-bold">완독을 축하해요</p>
             <p className="pr-10 text-sm text-ink-muted">
-              {book ? `『${book.title}』, 끝까지 읽었어요. ` : ''}서재의 ‘완독’ 칸으로 옮겨 두었어요.
+              {book ? `『${book.title}』, 끝까지 읽었어요. ` : ''}서재의 ‘완독’ 칸으로 옮겨
+              두었어요.
             </p>
             {speedText !== '—' && (
               <p className="text-sm text-ink-muted">이 책의 평균 속도 · {speedText}</p>

@@ -136,10 +136,10 @@ Claude Code에게 한 번에 **한 단계**씩 맡기세요. 각 단계에는 �
 ---
 
 ## 8단계 · 에메랄드 서재 테마 (약 1.5일) — TH-03, TH-04
-- [ ] `variants/emerald/`에 `TimerFace`(금장 다이얼), `SoundControls`(메달), `FinishCard`(THE LAST PAGE), `BookSpine`(금박 띠) 구현
-- [ ] 테마에 따라 부품을 고르는 구조(`useThemeVariant()` 등)
-- [ ] 화면 테두리 금 이중선, 가운데 정렬 머리말 등 화면 장식(DESIGN.md 9장)
-- [ ] 에메랄드 글꼴 포함(필요한 글자만)
+- [x] `variants/emerald/`에 `TimerFace`(금장 다이얼), `SoundControls`(메달), `FinishCard`(THE LAST PAGE), `BookSpine`(금박 띠) 구현
+- [x] 테마에 따라 부품을 고르는 구조(`useThemeVariant()` 등)
+- [x] 화면 테두리 금 이중선, 가운데 정렬 머리말 등 화면 장식(DESIGN.md 9장)
+- [x] 에메랄드 글꼴 포함(필요한 글자만) — 본명조 600·IBM Plex 400·Cormorant 3벌, 약 510KB(목표 300KB 초과, 종이와 비슷)
 
 **완료 기준**
 - `data-theme="emerald"`에서 타이머·서재 화면이 `emerald-mockup.html`과 비슷하게 보인다.
