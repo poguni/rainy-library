@@ -8,6 +8,9 @@ import { VitePWA } from 'vite-plugin-pwa';
 const PAPER_BG = '#F1EADD';
 
 export default defineConfig({
+  // GitHub Pages(https://poguni.github.io/rainy-library/)는 하위 경로에서 열립니다.
+  // 배포 워크플로가 BASE_PATH=/rainy-library/를 넘겨 주고, 내 컴퓨터에서는 '/'를 씁니다.
+  base: process.env.BASE_PATH ?? '/',
   plugins: [
     react(),
     tailwindcss(),

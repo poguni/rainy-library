@@ -102,3 +102,4 @@ src/
 - 4-1 독서 연대기 연동: v1.2 전까지 JSON 파일 내보내기
 - 환경음: CC0 무료 음원
 - 자동 테마 기본 규칙: 기기 다크 모드 따르기
+- 배포: GitHub Pages(`https://poguni.github.io/rainy-library/`, `.github/workflows/deploy.yml`, 2026-11-02 결정)

@@ -4,6 +4,7 @@ import { useLiveQuery } from '../../db/useLiveQuery';
 import { ChimeSettings } from './ChimeSettings';
 import { DevTools } from './DevTools';
 import { ScreenSettings } from './ScreenSettings';
+import { ThemeSettings } from './ThemeSettings';
 import { TimerSettings } from './TimerSettings';
 
 export function SettingsPage() {
@@ -34,6 +35,8 @@ export function SettingsPage() {
       </div>
       {settings && (
         <>
+          <ThemeSettings settings={settings} />
+          <hr className="border-line" />
           <TimerSettings settings={settings} />
           <hr className="border-line" />
           <ChimeSettings settings={settings} />

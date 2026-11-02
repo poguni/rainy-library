@@ -2,6 +2,7 @@
    빗소리 서재(Rainy Library) 디자인 토큰
    - 화면 코드에서는 색상값을 직접 쓰지 말고 아래 변수만 참조합니다.
    - <html data-theme="paper"> 또는 <html data-theme="emerald">로 테마를 바꿉니다.
+   - 설정의 미리보기 카드처럼 일부 요소에만 data-theme을 붙여 그 테마로 그릴 수도 있습니다.
    - 자세한 사용 규칙: docs/DESIGN.md
    ========================================================================== */
 
@@ -44,7 +45,8 @@
 
 /* ---------- 종이 서재 (A안, 기본값) ---------- */
 :root,
-:root[data-theme='paper'] {
+:root[data-theme='paper'],
+[data-theme='paper'] {
   color-scheme: light;
 
   /* 바탕과 면 */
@@ -101,7 +103,8 @@
 }
 
 /* ---------- 에메랄드 서재 (B안) ---------- */
-:root[data-theme='emerald'] {
+:root[data-theme='emerald'],
+[data-theme='emerald'] {
   color-scheme: dark;
 
   --color-bg: #0d231e; /* 에메랄드 가죽 */

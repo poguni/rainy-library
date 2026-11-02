@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { DEFAULT_SETTINGS } from '../../db/settings';
 import { ChimeSettings } from './ChimeSettings';
 import { ScreenSettings } from './ScreenSettings';
+import { ThemeSettings } from './ThemeSettings';
 import { TimerSettings } from './TimerSettings';
 
 const update = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
@@ -39,5 +40,19 @@ describe('설정 화면', () => {
     expect(update).not.toHaveBeenCalled();
     await userEvent.type(focus, '0');
     expect(update).toHaveBeenLastCalledWith({ focusMin: 40 });
+  });
+
+  it('테마 카드를 누르면 바로 선택되고, 자동이면 규칙을 고를 수 있다', async () => {
+    render(<ThemeSettings settings={DEFAULT_SETTINGS} />);
+    expect(screen.getByRole('radio', { name: /종이 서재/ })).toBeChecked();
+    await userEvent.click(screen.getByRole('radio', { name: /에메랄드 서재/ }));
+    expect(screen.getByRole('radio', { name: /에메랄드 서재/ })).toBeChecked();
+    expect(update).toHaveBeenCalledWith({ theme: 'emerald' });
+    expect(screen.queryByRole('radio', { name: '기기의 다크 모드를 따라요' })).toBeNull();
+
+    await userEvent.click(screen.getByRole('radio', { name: /자동/ }));
+    await userEvent.click(screen.getByRole('radio', { name: '정한 시간에만 에메랄드로' }));
+    expect(update).toHaveBeenCalledWith({ autoRule: 'schedule' });
+    expect(screen.getByLabelText('에메랄드 시작 시각')).toHaveValue('19:00');
   });
 });
