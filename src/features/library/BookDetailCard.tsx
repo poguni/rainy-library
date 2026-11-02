@@ -91,7 +91,7 @@ export function BookDetailCard({ book, totals, speedText, finish, onStatusChange
       <div className="grid grid-cols-3 gap-2 emerald:gap-0 emerald:border-y emerald:border-line">
         <Stat label="누적 독서" value={totals ? formatDuration(totals.focusSeconds) : '—'} />
         <Stat label="평균 속도" value={speedText} />
-        <Stat label="독서 세션" value={totals ? `${totals.sessionCount}회` : '—'} />
+        <Stat label="독서 횟수"value={totals ? `${totals.sessionCount}회` : '—'} />
       </div>
 
       {finish && <FinishCard {...finish} />}

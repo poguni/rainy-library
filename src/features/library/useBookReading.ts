@@ -7,9 +7,9 @@ import { formatApproxMinutes, formatKoreanDate } from '../../lib/time';
 import type { FinishCardProps } from '../../theme/variants/paper/FinishCard';
 
 const NOTE = {
-  'need-more': '기록이 더 쌓이면 알려 드릴게요',
-  'no-recent': '최근 2주 동안 읽은 기록이 없어서 아직 알 수 없어요',
-  done: '마지막 장까지 다 읽었어요',
+  'need-more': '기록이 더 쌓이면 알려 드릴게요.',
+  'no-recent': '최근 2주 동안 읽은 기록이 없어서 아직 알 수 없어요.',
+  done: '마지막 장까지 다 읽었어요.',
 } as const;
 
 /** 책 한 권의 평균 속도와 완독 예상일(FinishCard에 넘길 값) */

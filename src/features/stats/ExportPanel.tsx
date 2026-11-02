@@ -81,7 +81,7 @@ export function ExportPanel() {
           <Row title="엑셀 파일(xlsx)" desc="책 목록, 독서 기록, 책 속 한 문장을 표로 정리해요." />
         </button>
         <Link to="/stats/print" className={rowClass}>
-          <Row title="인쇄 / PDF로 저장" desc="A4 한 장에 맞춘 독서 기록 화면을 열어요." />
+          <Row title="인쇄 / PDF로 저장" desc="A4 용지에 맞춘 독서 기록 화면을 열어요." />
         </Link>
       </Group>
       <Group title="다른 앱·기기로 옮기기">

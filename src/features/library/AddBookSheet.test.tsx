@@ -20,15 +20,15 @@ describe('책 추가 시트', () => {
 
   it('쪽수 칸에는 숫자만 들어간다', async () => {
     const { user } = setup();
-    await user.type(screen.getByLabelText('전체 쪽수 (필수)'), '2a4-8');
-    expect(screen.getByLabelText('전체 쪽수 (필수)')).toHaveValue('248');
+    await user.type(screen.getByLabelText('전체 쪽수(필수)'), '2a4-8');
+    expect(screen.getByLabelText('전체 쪽수(필수)')).toHaveValue('248');
   });
 
   it('올바르게 적으면 저장하고 닫는다', async () => {
     const { onSubmit, onClose, user } = setup();
-    await user.type(screen.getByLabelText('제목 (필수)'), '  데미안 ');
+    await user.type(screen.getByLabelText('제목(필수)'), '  데미안 ');
     await user.type(screen.getByLabelText('저자'), '헤르만 헤세');
-    await user.type(screen.getByLabelText('전체 쪽수 (필수)'), '248');
+    await user.type(screen.getByLabelText('전체 쪽수(필수)'), '248');
     await user.click(screen.getByRole('button', { name: '책 추가' }));
     expect(onSubmit).toHaveBeenCalledWith({
       title: '데미안',

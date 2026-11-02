@@ -92,7 +92,7 @@ export function booksTable(books: Book[], sessions: Session[], today: Date): She
       { header: '현재 쪽수', format: 'int' },
       { header: '진행률(%)', format: 'percent' },
       { header: '누적 독서 시간(분)', format: 'int' },
-      { header: '세션 수', format: 'int' },
+      { header: '독서 횟수', format: 'int' },
       { header: '평균 속도(쪽/분)', format: 'speed' },
       { header: '완독 예상일', format: 'date' },
       { header: '등록일', format: 'date' },

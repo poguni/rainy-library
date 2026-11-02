@@ -45,7 +45,7 @@ export function AddBookSheet({ onSubmit, onClose }: Props) {
       <form onSubmit={submit} noValidate className="mt-4 flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="book-title" className="text-sm">
-            제목 (필수)
+            제목(필수)
           </label>
           <input
             id="book-title"
@@ -74,7 +74,7 @@ export function AddBookSheet({ onSubmit, onClose }: Props) {
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="book-pages" className="text-sm">
-            전체 쪽수 (필수)
+            전체 쪽수(필수)
           </label>
           <input
             id="book-pages"
@@ -93,7 +93,7 @@ export function AddBookSheet({ onSubmit, onClose }: Props) {
         </div>
         <div className="flex flex-col gap-1.5">
           <label htmlFor="book-cover" className="text-sm">
-            표지 사진 (선택)
+            표지 사진(선택)
           </label>
           <input
             id="book-cover"
