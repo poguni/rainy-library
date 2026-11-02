@@ -78,7 +78,7 @@ export function ExportPanel() {
             void run(exportXlsx, '엑셀 파일을 저장했어요.', '엑셀 파일을 만들지 못했어요.')
           }
         >
-          <Row title="엑셀 파일(xlsx)" desc="책 목록과 독서 기록을 표로 정리해요." />
+          <Row title="엑셀 파일(xlsx)" desc="책 목록, 독서 기록, 책 속 한 문장을 표로 정리해요." />
         </button>
         <Link to="/stats/print" className={rowClass}>
           <Row title="인쇄 / PDF로 저장" desc="A4 한 장에 맞춘 독서 기록 화면을 열어요." />

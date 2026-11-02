@@ -4,6 +4,7 @@ import type { Book, Session } from '../../db/types';
 import {
   booksTable,
   columnWidths,
+  quotesTable,
   sessionsTable,
   toExcelDate,
   type CellFormat,
@@ -62,6 +63,7 @@ export async function buildWorkbook(books: Book[], sessions: Session[], now: Dat
   wb.created = now;
   addSheet(wb, booksTable(books, sessions, now));
   addSheet(wb, sessionsTable(books, sessions));
+  addSheet(wb, quotesTable(books));
   const buffer = await wb.xlsx.writeBuffer();
   return new Blob([buffer], {
     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

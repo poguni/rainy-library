@@ -1,4 +1,4 @@
-export type IdPrefix = 'ses' | 'book' | 'preset' | 'track';
+export type IdPrefix = 'ses' | 'book' | 'preset' | 'track' | 'quote';
 
 /** 접두어 + 무작위 문자열. 예: book_k3j9x2m1q8 */
 export function newId(prefix: IdPrefix): string {

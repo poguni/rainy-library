@@ -97,6 +97,7 @@
 | B-05 | 끝 쪽수가 전체 쪽수에 도달하면 '완독' 축하 화면 + 상태 자동 변경 | P1 |
 | B-06 | 통계 화면: 일·주·월별 독서 시간 막대그래프, 독서 달력(잔디) | P1 |
 | B-07 | ISBN 바코드·검색으로 책 정보 자동 입력 | P2 |
+| B-08 | 책 속 한 문장 기록: 책마다 여러 개(쪽수 선택, 300자까지), 책 상세·세션 결과에서 남기기, 종이 서재 타이머 카드에 하루 하나씩 보여 주기 | P2 |
 
 ### 5.4 환경음 믹서
 | ID | 요구사항 | 우선순위 |
@@ -210,7 +211,7 @@
 ### 8.1 저장소 목록
 | 저장소 | 주요 필드 |
 |---|---|
-| `books` | id, title, author, totalPages, coverBlob, status, currentPage, createdAt |
+| `books` | id, title, author, totalPages, coverBlob, status, currentPage, createdAt, quotes: [{id, text, page?, createdAt}] |
 | `sessions` | id, bookId, startedAt, endedAt, focusSeconds, startPage, endPage, mode, presetId |
 | `presets` | id, name, layers: [{soundId, volume, on}], masterVolume |
 | `tracks` | id, name, fileBlob, duration, order |
@@ -372,6 +373,7 @@ Web Audio API, Media Session API, Screen Wake Lock API, Notifications API, File 
 | v0.1 | 2026-10-29 | 초안 작성 |
 | v0.2 | 2026-10-29 | 앱 이름 '빗소리 서재(Rainy Library)' 확정 |
 | v0.3 | 2026-10-31 | 테마 기능(5.8절) 추가, 일정·데이터 모델·기술 구조 반영, 열린 질문에 잠정 결정 추가 |
+| v0.4 | 2026-11-02 | B-08 책 속 한 문장 기록 추가(`Book.quotes`, ID 접두어 `quote_`) |
 
 ---
 

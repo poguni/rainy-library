@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { BottomSheet } from '../../components/BottomSheet';
+import { addQuote } from '../../db/books';
 import type { Book, Session } from '../../db/types';
 import { sessionSummary } from '../../lib/reading';
 import { FinishCard } from '../../theme/parts';
+import { QuoteForm } from '../library/QuoteForm';
 import { useBookReading } from '../library/useBookReading';
 
 interface Props {
@@ -16,6 +19,7 @@ interface Props {
 export function SessionResultSheet({ session, book, finished, onClose }: Props) {
   const { line, hint } = sessionSummary(session);
   const { finish, speedText } = useBookReading(book);
+  const [quote, setQuote] = useState<'closed' | 'open' | 'saved'>('closed');
 
   return (
     <BottomSheet
@@ -50,6 +54,32 @@ export function SessionResultSheet({ session, book, finished, onClose }: Props) 
           {hint && <div className="text-sm text-ink-muted">{hint}</div>}
         </div>
         {!finished && finish && <FinishCard {...finish} />}
+        {book && quote === 'closed' && (
+          <button
+            type="button"
+            onClick={() => setQuote('open')}
+            className="flex min-h-11 items-center justify-center text-sm text-accent"
+          >
+            기억하고 싶은 문장 남기기
+          </button>
+        )}
+        {book && quote === 'open' && (
+          <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-4">
+            <QuoteForm
+              idPrefix="session-quote"
+              autoFocus
+              totalPages={book.totalPages}
+              defaultPage={session.endPage ?? undefined}
+              onSave={(text, page) => addQuote(book.id, text, page).then(() => setQuote('saved'))}
+              onCancel={() => setQuote('closed')}
+            />
+          </div>
+        )}
+        {quote === 'saved' && (
+          <p role="status" className="text-center text-sm text-ink-muted">
+            문장을 남겼어요. 서재의 책 상세에서 다시 볼 수 있어요.
+          </p>
+        )}
         <button
           type="button"
           onClick={onClose}

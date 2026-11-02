@@ -19,7 +19,7 @@ export function BottomSheet({ title, onClose, children }: Props) {
 
   useEffect(() => {
     const prevFocus = document.activeElement as HTMLElement | null;
-    panelRef.current?.querySelector<HTMLElement>('input, button, select')?.focus();
+    panelRef.current?.querySelector<HTMLElement>('input, textarea, button, select')?.focus();
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current();
     document.addEventListener('keydown', onKey);
     return () => {

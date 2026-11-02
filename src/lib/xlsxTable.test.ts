@@ -4,6 +4,7 @@ import {
   columnWidths,
   MAX_WIDTH,
   MIN_WIDTH,
+  quotesTable,
   sessionsTable,
   textWidth,
   toExcelDate,
@@ -74,5 +75,48 @@ describe('toExcelDate', () => {
   it('기기 시각 숫자를 UTC 숫자로 옮긴다', () => {
     const d = toExcelDate(new Date(2026, 9, 29, 21, 5));
     expect([d.getUTCHours(), d.getUTCMinutes(), d.getUTCDate()]).toEqual([21, 5, 29]);
+  });
+});
+
+describe('quotesTable', () => {
+  it('책 목록 순서 → 같은 책은 먼저 남긴 문장부터, 쪽수 없으면 빈칸', () => {
+    const older: Book = {
+      ...book,
+      id: 'book_00',
+      title: '데미안',
+      author: '',
+      createdAt: new Date(2026, 8, 1).toISOString(),
+    };
+    const withQuotes: Book = {
+      ...book,
+      quotes: [
+        { id: 'quote_b', text: '둘째 문장', createdAt: new Date(2026, 9, 5).toISOString() },
+        {
+          id: 'quote_a',
+          text: '첫째 문장\n두 줄',
+          page: 12,
+          createdAt: new Date(2026, 9, 2).toISOString(),
+        },
+      ],
+    };
+    const olderQ: Book = {
+      ...older,
+      quotes: [
+        {
+          id: 'quote_c',
+          text: '새는 알에서',
+          page: 3,
+          createdAt: new Date(2026, 9, 9).toISOString(),
+        },
+      ],
+    };
+    const t = quotesTable([withQuotes, olderQ, { ...book, id: 'book_x', quotes: [] }]);
+    expect(t.name).toBe('책 속 한 문장');
+    expect(t.rows.map((r) => r.slice(0, 4))).toEqual([
+      ['데미안', null, 3, '새는 알에서'],
+      [book.title, '한강', 12, '첫째 문장\n두 줄'],
+      [book.title, '한강', null, '둘째 문장'],
+    ]);
+    expect(t.rows[0][4]).toBeInstanceOf(Date);
   });
 });

@@ -4,6 +4,7 @@ import { checkStartPage } from '../../lib/pages';
 import { ROUNDS_PER_CYCLE, roundInCycle, type TimerMode } from '../../lib/timer';
 import { DEFAULT_SETTINGS } from '../../db/settings';
 import { TimerFace } from '../../theme/parts';
+import { quoteOfDay } from '../../lib/quotes';
 import { BookPickerSheet } from './BookPickerSheet';
 import { CurrentBookCard } from './CurrentBookCard';
 import { EndSessionSheet } from './EndSessionSheet';
@@ -94,6 +95,7 @@ export function TimerPage() {
         round={roundInCycle(view?.round ?? 1)}
         rounds={ROUNDS_PER_CYCLE}
         paused={timer.paused}
+        quote={quoteOfDay(book?.quotes, new Date())?.text}
       />
 
       <TimerControls

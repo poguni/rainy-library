@@ -5,6 +5,7 @@ import { bookTotals, progressPercent } from '../../lib/books';
 import { bookAverageSpeed, formatSpeed, sessionPages } from '../../lib/reading';
 import { dayKey } from '../../lib/stats';
 import { formatDuration } from '../../lib/time';
+import { PrintQuotes } from './PrintQuotes';
 
 const STATUS = { reading: '읽는 중', finished: '완독', paused: '보류' } as const;
 const th = 'border-b border-ink px-1.5 py-1 text-left font-bold';
@@ -17,7 +18,7 @@ const hm = (iso: string) => {
   return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 };
 
-/** 인쇄용 '독서 기록'(A4). 브라우저 인쇄에서 'PDF로 저장'을 고르면 파일이 됩니다. */
+/** 인쇄용 '독서 기록'(A4): 책별 요약, 날짜별 기록, 책 속 한 문장. 브라우저 인쇄에서 'PDF로 저장'을 고르면 파일이 됩니다. */
 export function PrintPage() {
   const books = useLiveQuery(() => db.books.orderBy('createdAt').toArray(), []);
   const sessions = useLiveQuery(() => db.sessions.orderBy('startedAt').toArray(), []);
@@ -136,6 +137,8 @@ export function PrintPage() {
           </tbody>
         </table>
       </section>
+
+      <PrintQuotes books={books} />
     </article>
   );
 }

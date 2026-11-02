@@ -2,6 +2,7 @@ import type { Book, BookStatus } from '../../db/types';
 import type { BookTotals } from '../../lib/books';
 import { progressPercent } from '../../lib/books';
 import { formatDuration } from '../../lib/time';
+import { BookQuotes } from './BookQuotes';
 import { STATUSES, STATUS_LABEL } from './useLibrary';
 import { BlobImage } from '../../components/BlobImage';
 import { FinishCard } from '../../theme/parts';
@@ -27,7 +28,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   );
 }
 
-/** 선택한 책의 상세(진행률, 누적 시간, 평균 속도, 세션 수, 완독 예상일) */
+/** 선택한 책의 상세(진행률, 누적 시간, 평균 속도, 세션 수, 완독 예상일, 책 속 한 문장) */
 export function BookDetailCard({ book, totals, speedText, finish, onStatusChange }: Props) {
   const percent = progressPercent(book.currentPage, book.totalPages);
 
@@ -109,6 +110,8 @@ export function BookDetailCard({ book, totals, speedText, finish, onStatusChange
           ))}
         </select>
       </label>
+
+      <BookQuotes book={book} />
     </section>
   );
 }

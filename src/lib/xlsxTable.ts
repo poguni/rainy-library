@@ -139,6 +139,34 @@ export function sessionsTable(books: Book[], sessions: Session[]): SheetTable {
   };
 }
 
+/** 시트 3 "책 속 한 문장": 책 목록 순서, 같은 책 안에서는 먼저 남긴 문장부터 */
+export function quotesTable(books: Book[]): SheetTable {
+  const rows = [...books]
+    .sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1))
+    .flatMap((b) =>
+      [...(b.quotes ?? [])]
+        .sort((x, y) => (x.createdAt < y.createdAt ? -1 : 1))
+        .map((q): CellValue[] => [
+          b.title,
+          b.author || null,
+          q.page ?? null,
+          q.text,
+          new Date(q.createdAt),
+        ]),
+    );
+  return {
+    name: '책 속 한 문장',
+    columns: [
+      { header: '책 제목', format: 'text', wrap: true },
+      { header: '저자', format: 'text', wrap: true },
+      { header: '쪽수', format: 'int' },
+      { header: '문장', format: 'text', wrap: true },
+      { header: '남긴 날', format: 'date' },
+    ],
+    rows,
+  };
+}
+
 /** 엑셀은 날짜를 시간대 없이 저장하므로, 기기 시각 그대로 보이게 UTC로 옮깁니다. */
 export function toExcelDate(d: Date): Date {
   return new Date(d.getTime() - d.getTimezoneOffset() * 60_000);

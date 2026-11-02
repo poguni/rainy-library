@@ -10,6 +10,16 @@ export interface Book {
   status: BookStatus;
   currentPage: number;
   createdAt: string;
+  /** 책 속 한 문장(오래된 것부터). 색인이 없는 칸이라 스키마 버전을 올리지 않아도 됩니다. */
+  quotes?: Quote[];
+}
+
+/** 책 속 한 문장 */
+export interface Quote {
+  id: string;
+  text: string;
+  page?: number;
+  createdAt: string;
 }
 
 export interface Session {

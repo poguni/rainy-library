@@ -12,6 +12,8 @@ export interface TimerFaceProps {
   round: number;
   rounds: number;
   paused: boolean;
+  /** 지금 읽는 책의 '책 속 한 문장'(종이: 링 아래, 에메랄드: 다이얼 아래) */
+  quote?: string;
 }
 
 const R = 96;
@@ -26,6 +28,7 @@ export function TimerFace({
   round,
   rounds,
   paused,
+  quote,
 }: TimerFaceProps) {
   const resting = phase !== 'focus';
   const free = mode === 'free';
@@ -101,6 +104,11 @@ export function TimerFace({
             <div className="text-sm text-ink-muted">{sub}</div>
           </div>
         </div>
+        {quote && (
+          <p className="line-clamp-2 max-w-[280px] text-center font-display text-md leading-relaxed text-ink-muted">
+            “{quote}”
+          </p>
+        )}
       </div>
     </div>
   );
