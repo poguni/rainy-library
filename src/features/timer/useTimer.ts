@@ -142,7 +142,7 @@ export function useTimerState(chimeStyle: ChimeStyle) {
     },
     skip: () => apply((s, t, d) => skipPhase(s, d, t)),
 
-    /** 세션을 기록하고 타이머를 비웁니다. endPage가 null이면 시간만 기록(P-02). */
+    /** 세션을 기록하고 타이머를 비웁니다. endPage가 null이면 시간만 기록(P-02). finished: 이번에 완독(B-05) */
     finish: async (endPage: number | null) => {
       const a = ref.current;
       if (!a) return null;
@@ -160,10 +160,10 @@ export function useTimerState(chimeStyle: ChimeStyle) {
         mode: state.mode,
         presetId: await currentPresetId(),
       };
-      await saveSession(session);
+      const finished = await saveSession(session);
       setActive(null);
       soundEngine.stop();
-      return session;
+      return { session, finished };
     },
   };
 }

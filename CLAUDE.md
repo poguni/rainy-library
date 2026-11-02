@@ -24,7 +24,8 @@
 - Dexie.js (IndexedDB)
 - Web Audio API (직접 구현, 오디오 라이브러리 사용 안 함)
 - vite-plugin-pwa (Workbox)
-- Recharts (통계 그래프)
+- 통계 그래프: 라이브러리 없이 직접 그림(2026-11-02 결정, Recharts 대신)
+- exceljs (엑셀 내보내기, 버튼을 누를 때만 불러옴)
 - Vitest + Testing Library (테스트), Playwright (E2E, 필요할 때)
 - 패키지 매니저: npm
 

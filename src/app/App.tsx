@@ -4,14 +4,15 @@ import { TimerProvider } from '../features/timer/TimerProvider';
 import { TimerPage } from '../features/timer/TimerPage';
 import { SoundPage } from '../features/sound/SoundPage';
 import { LibraryPage } from '../features/library/LibraryPage';
+import { PrintPage } from '../features/stats/PrintPage';
 import { StatsPage } from '../features/stats/StatsPage';
 import { SettingsPage } from '../features/settings/SettingsPage';
 
 export default function App() {
   return (
     <TimerProvider>
-      <div className="mx-auto min-h-dvh max-w-[480px] bg-bg pb-[var(--tabbar-height)] text-ink">
-        <main className="px-[var(--screen-pad-x)] pt-6">
+      <div className="mx-auto min-h-dvh max-w-[480px] bg-bg pb-[var(--tabbar-height)] text-ink print:max-w-none print:pb-0">
+        <main className="px-[var(--screen-pad-x)] pt-6 print:p-0">
           <Routes>
             <Route path="/" element={<Navigate to="/timer" replace />} />
             <Route path="/timer" element={<TimerPage />} />
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/stats" element={<StatsPage />} />
             <Route path="/stats/settings" element={<SettingsPage />} />
+            <Route path="/stats/print" element={<PrintPage />} />
             <Route path="*" element={<Navigate to="/timer" replace />} />
           </Routes>
         </main>

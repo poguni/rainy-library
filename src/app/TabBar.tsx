@@ -12,7 +12,7 @@ export function TabBar() {
   return (
     <nav
       aria-label="주요 화면"
-      className="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] border-t border-line bg-surface"
+      className="fixed inset-x-0 bottom-0 mx-auto max-w-[480px] border-t border-line bg-surface print:hidden"
     >
       <ul className="grid grid-cols-4">
         {tabs.map((tab) => (

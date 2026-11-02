@@ -24,7 +24,7 @@ export function TimerPage() {
   const [startChecked, setStartChecked] = useState(false);
   const [sheet, setSheet] = useState<'none' | 'pick' | 'end'>('none');
   const [resumeAfterSheet, setResumeAfterSheet] = useState(false);
-  const [result, setResult] = useState<Session | null>(null);
+  const [result, setResult] = useState<{ session: Session; finished: boolean } | null>(null);
 
   const durations = cur.settings ?? DEFAULT_SETTINGS;
   const book = cur.book;
@@ -133,8 +133,9 @@ export function TimerPage() {
       )}
       {result && (
         <SessionResultSheet
-          session={result}
-          book={cur.books.find((b) => b.id === result.bookId)}
+          session={result.session}
+          finished={result.finished}
+          book={cur.books.find((b) => b.id === result.session.bookId)}
           onClose={() => setResult(null)}
         />
       )}
