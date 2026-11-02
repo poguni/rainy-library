@@ -59,6 +59,15 @@ export interface Settings {
   currentBookId?: string;
   /** 지금 믹서 조합(색인 없는 필드) */
   mixer?: Mix;
+  /** 내 음악 플레이어 설정(색인 없는 필드) */
+  music?: MusicPrefs;
+}
+
+export interface MusicPrefs {
+  /** 0~1 */
+  volume: number;
+  shuffle: boolean;
+  repeat: 'off' | 'all' | 'one';
 }
 
 /** 믹서 조합: 소리별 켜짐·음량(0~1) + 마스터 음량(0~1). 프리셋과 같은 모양 */

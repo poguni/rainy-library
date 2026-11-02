@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 import { getSettings } from '../../db/settings';
 import { useLiveQuery } from '../../db/useLiveQuery';
 import { soundEngine } from '../sound/engine';
+import { musicPlayer } from '../sound/music';
 import { BREAK_LEVEL } from '../sound/sounds';
 import { toChimeStyle } from './chime';
 import { TimerContext } from './timerContext';
@@ -19,6 +20,7 @@ export function TimerProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     void soundEngine.init();
+    musicPlayer.init();
   }, []);
 
   useEffect(() => {

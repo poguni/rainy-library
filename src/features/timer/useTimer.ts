@@ -17,6 +17,7 @@ import {
 } from '../../lib/timer';
 import { unlockAudio } from '../sound/audioContext';
 import { soundEngine } from '../sound/engine';
+import { currentPresetId } from '../sound/presets';
 import { playChime, type ChimeStyle } from './chime';
 import { askNotifyPermission, notifyPhase } from './notify';
 
@@ -157,6 +158,7 @@ export function useTimerState(chimeStyle: ChimeStyle) {
         startPage: a.startPage,
         endPage,
         mode: state.mode,
+        presetId: await currentPresetId(),
       };
       await saveSession(session);
       setActive(null);

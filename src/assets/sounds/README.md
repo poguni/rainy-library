@@ -11,4 +11,4 @@
 - 이 폴더의 파일은 `sound-originals/`의 원본을 `scripts/prepare-sounds.sh`로 다듬은 것입니다(−23 LUFS, AAC 96kbps).
 - 음원을 바꾸려면 원본을 `sound-originals/`에 같은 이름으로 넣고 `bash scripts/prepare-sounds.sh`를 실행합니다.
 - 반복 이음새는 앱이 불러올 때 1초 크로스페이드로 처리합니다(`src/lib/loop.ts`).
-- 저작권: 비상업 목적 사용 허락을 제작자에게 다시 확인하는 중. 확인되면 `docs/ASSETS.md` 출처 표를 채웁니다(화면 표시는 하지 않음).
+- 저작권: 비상업 목적 사용 허락을 제작자에게 다시 확인하는 중. 그동안 '흐르는 소리' 화면 아래에 `[출처] 유튜브 채널명`으로 간단히 표기합니다(`sounds.ts`의 `source`).

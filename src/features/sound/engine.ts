@@ -1,6 +1,7 @@
 // 환경음 엔진(PRD 9.1). 화면과 상관없이 앱 전체에 하나만 있습니다.
-// [소리별 BufferSource(loop)] → [소리별 Gain] → [마스터 Gain] → [단계 Gain] → [Compressor] → 스피커
-//   - 단계 Gain: 재생/정지와 집중·휴식 페이드(T-07)를 맡습니다.
+// [소리별 BufferSource(loop)] → [소리별 Gain] → [단계 Gain] ─┐
+// [내 음악 <audio> MediaElementSource] → [음악 Gain] ──────────┴→ [마스터 Gain] → [Compressor] → 스피커
+//   - 단계 Gain: 환경음의 재생/정지와 집중·휴식 페이드(T-07)를 맡습니다. 음악은 여기에 걸리지 않습니다.
 import { getSettings, updateSettings } from '../../db/settings';
 import type { Mix, SoundLayer } from '../../db/types';
 import { crossfadeLoop } from '../../lib/loop';
@@ -11,6 +12,7 @@ const RAMP_SEC = 0.08; // 음량 슬라이더·스위치: 짧게 부드럽게('�
 const FADE_IN_SEC = 3; // 재생 시작
 const PHASE_FADE_SEC = 3; // 집중 ↔ 휴식
 const STOP_FADE_SEC = 1.5; // 정지
+const PRESET_SEC = 1.2; // 프리셋으로 조합을 한 번에 바꿀 때
 const LOOP_FADE_SEC = 1; // 반복 이음새 크로스페이드
 
 export interface MixerSnapshot {
@@ -86,12 +88,12 @@ class SoundEngine {
       const comp = ctx.createDynamicsCompressor();
       master.gain.value = this.snap.mix.masterVolume;
       phase.gain.value = 0;
-      master.connect(phase).connect(comp).connect(ctx.destination);
+      phase.connect(master).connect(comp).connect(ctx.destination);
       const layers = new Map<string, GainNode>();
       for (const s of SOUNDS) {
         const g = ctx.createGain();
         g.gain.value = 0;
-        g.connect(master);
+        g.connect(phase);
         layers.set(s.id, g);
       }
       this.graph = { master, phase, layers };
@@ -190,9 +192,21 @@ class SoundEngine {
     this.updateMix({ ...this.snap.mix, masterVolume });
   }
 
-  private updateMix(mix: Mix) {
+  /** 프리셋: 조합을 한 번에 바꾸고, 멈춰 있었으면 재생을 시작합니다(사용자가 누른 흐름 안에서). */
+  applyPreset(mix: Mix) {
+    this.updateMix(normalizeMix(structuredClone(mix)), PRESET_SEC);
+    if (!this.snap.playing) void this.play();
+  }
+
+  /** 내 음악을 이을 곳(마스터 Gain). AudioContext를 못 만들면 null */
+  musicInput(): { ctx: AudioContext; node: AudioNode } | null {
+    const ctx = this.ensureGraph();
+    return ctx && this.graph ? { ctx, node: this.graph.master } : null;
+  }
+
+  private updateMix(mix: Mix, sec = RAMP_SEC) {
     this.set({ mix });
-    this.applyMix();
+    this.applyMix(sec);
     const ctx = getAudioContext();
     if (ctx && this.graph && this.snap.playing) void this.loadOn(ctx); // 새로 켠 소리
     clearTimeout(this.saveTimer);

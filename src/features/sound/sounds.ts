@@ -6,6 +6,8 @@ export interface SoundInfo {
   id: SoundId;
   label: string;
   url: string;
+  /** 출처 채널 이름(유튜브). 저작권 확인 중이라 우선 간단히 표기합니다. */
+  source: string;
 }
 
 // 파일은 scripts/prepare-sounds.sh로 다듬은 것(−23 LUFS, AAC 96kbps). 원본은 sound-originals/에 있습니다.
@@ -16,26 +18,31 @@ export const SOUNDS: SoundInfo[] = [
     id: 'rain',
     label: '창밖 빗소리',
     url: new URL('../../assets/sounds/rain_1.m4a', import.meta.url).href,
+    source: 'Relax Sleep ASMR',
   },
   {
     id: 'rain2',
     label: '처마 끝 빗소리',
     url: new URL('../../assets/sounds/rain_2.m4a', import.meta.url).href,
+    source: '피스풀모닝 Peaceful Morning',
   },
   {
     id: 'fire',
     label: '장작',
     url: new URL('../../assets/sounds/fire.m4a', import.meta.url).href,
+    source: 'Slow TV',
   },
   {
     id: 'cafe',
     label: '카페',
     url: new URL('../../assets/sounds/cafe.m4a', import.meta.url).href,
+    source: '숨 사운드 Soom Sound',
   },
   {
     id: 'crickets',
     label: '귀뚜라미',
     url: new URL('../../assets/sounds/crickets.m4a', import.meta.url).href,
+    source: '힐링사운드 ASMR',
   },
 ];
 
