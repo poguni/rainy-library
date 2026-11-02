@@ -1,5 +1,13 @@
 import type { Book, Session } from '../db/types';
-import { BACKUP_SCHEMA, exportFileName, parseBackup, readingLog, toLocalIso } from './exportData';
+import {
+  BACKUP_SCHEMA,
+  backupRoot,
+  coverFileName,
+  exportFileName,
+  parseBackup,
+  readingLog,
+  toLocalIso,
+} from './exportData';
 
 const book: Book = {
   id: 'book_01',
@@ -94,5 +102,21 @@ describe('exportFileName', () => {
     expect(exportFileName('독서기록', 'xlsx', new Date(2026, 10, 2))).toBe(
       '빗소리서재_독서기록_2026-11-02.xlsx',
     );
+  });
+});
+
+describe('ZIP 백업 경로', () => {
+  it('표지 경로는 책 ID + 형식에 맞는 확장자', () => {
+    expect(coverFileName('book_abc', 'image/jpeg')).toBe('covers/book_abc.jpg');
+    expect(coverFileName('book_abc', 'image/webp')).toBe('covers/book_abc.webp');
+    expect(coverFileName('book_abc', '')).toBe('covers/book_abc.img');
+  });
+
+  it('backup.json 위치를 찾는다(맨 위 또는 다시 묶은 폴더 안)', () => {
+    expect(backupRoot(['backup.json', 'covers/book_a.jpg'])).toBe('');
+    expect(backupRoot(['빗소리서재_백업/covers/a.jpg', '빗소리서재_백업/backup.json'])).toBe(
+      '빗소리서재_백업/',
+    );
+    expect(backupRoot(['covers/book_a.jpg', 'my-backup.json'])).toBeUndefined();
   });
 });

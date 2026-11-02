@@ -14,7 +14,7 @@ export function Shelf({ books, selectedId, onSelect }: Props) {
     <div className="flex flex-col">
       <ul
         aria-label="책꽂이"
-        className="flex h-[142px] items-end gap-1 overflow-x-auto px-2.5 pt-3 pr-6 emerald:justify-center-safe emerald:gap-[3px] emerald:pr-2.5"
+        className="flex h-[156px] items-end gap-1 overflow-x-auto overflow-y-hidden px-2.5 pt-3 pr-6 emerald:justify-center-safe emerald:gap-[3px] emerald:pr-2.5"
       >
         {books.map((book, i) => (
           <li key={book.id} className="flex">

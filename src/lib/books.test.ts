@@ -38,11 +38,11 @@ describe('spineLook', () => {
     expect(spineLook('x', 300).width).toBe(34);
     expect(spineLook('x', 900).width).toBe(42);
   });
-  it('높이 86~128px, 색 1~6, 리넨·미색만 어두운 글자', () => {
+  it('높이 100~142px, 색 1~6, 리넨·미색만 어두운 글자', () => {
     for (let i = 0; i < 300; i++) {
       const look = spineLook(`book_${i}`, 200);
-      expect(look.height).toBeGreaterThanOrEqual(86);
-      expect(look.height).toBeLessThanOrEqual(128);
+      expect(look.height).toBeGreaterThanOrEqual(100);
+      expect(look.height).toBeLessThanOrEqual(142);
       expect(look.colorIndex).toBeGreaterThanOrEqual(1);
       expect(look.colorIndex).toBeLessThanOrEqual(6);
       expect(look.darkInk).toBe(look.colorIndex === 2 || look.colorIndex === 6);

@@ -39,10 +39,42 @@ export function readingLog(books: Book[], sessions: Session[], now: Date) {
 
 export const BACKUP_SCHEMA = 'rainy-library-backup/v1';
 
-/** 백업 파일 안의 표지: 형식 + base64 */
+/**
+ * 백업 안의 표지. ZIP 백업은 file(ZIP 안의 경로), 예전 JSON 백업은 base64로 들어 있습니다.
+ * 표지 없는 '기록만 백업'에는 cover가 없습니다.
+ */
 export interface BackupCover {
   type: string;
-  base64: string;
+  file?: string;
+  base64?: string;
+}
+
+/** ZIP 백업 안의 데이터 파일 이름 */
+export const BACKUP_JSON = 'backup.json';
+
+const COVER_EXT: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'image/avif': 'avif',
+  'image/heic': 'heic',
+};
+
+/** ZIP 백업 안의 표지 경로: covers/book_abc.jpg */
+export function coverFileName(bookId: string, type: string): string {
+  return `covers/${bookId}.${COVER_EXT[type] ?? 'img'}`;
+}
+
+/**
+ * ZIP 안에서 backup.json을 찾아 그 폴더 경로를 돌려줍니다.
+ * 사용자가 압축을 풀었다가 폴더째 다시 묶어도('폴더/backup.json') 찾을 수 있게 합니다.
+ */
+export function backupRoot(names: string[]): string | undefined {
+  const hit = names
+    .filter((n) => n === BACKUP_JSON || n.endsWith(`/${BACKUP_JSON}`))
+    .sort((x, y) => x.length - y.length)[0];
+  return hit?.slice(0, -BACKUP_JSON.length);
 }
 
 export type BackupBook = Omit<Book, 'coverBlob'> & { cover?: BackupCover };
@@ -75,7 +107,8 @@ export function parseBackup(text: string): Backup {
   }
   const books = data.books as unknown[];
   const sessions = data.sessions as unknown[];
-  const okBook = (b: unknown) => isObj(b) && typeof b.id === 'string' && typeof b.title === 'string';
+  const okBook = (b: unknown) =>
+    isObj(b) && typeof b.id === 'string' && typeof b.title === 'string';
   const okSession = (s: unknown) =>
     isObj(s) && typeof s.id === 'string' && typeof s.bookId === 'string';
   if (!books.every(okBook) || !sessions.every(okSession)) {

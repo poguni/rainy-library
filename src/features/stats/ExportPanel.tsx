@@ -1,7 +1,13 @@
 import { useRef, useState, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { BottomSheet } from '../../components/BottomSheet';
-import { exportBackup, exportChronicle, exportXlsx, restoreBackup } from './exporters';
+import {
+  exportBackup,
+  exportChronicle,
+  exportRecords,
+  exportXlsx,
+  restoreBackup,
+} from './exporters';
 
 const rowClass =
   'press flex min-h-14 w-full flex-col justify-center gap-0.5 border-b border-line px-1 py-2.5 text-left last:border-b-0 disabled:opacity-50';
@@ -97,7 +103,20 @@ export function ExportPanel() {
             void run(exportBackup, '백업 파일을 저장했어요.', '백업 파일을 만들지 못했어요.')
           }
         >
-          <Row title="전체 백업(JSON)" desc="책·표지·기록·프리셋·설정. 음악 파일은 빠져요." />
+          <Row
+            title="전체 백업(ZIP)"
+            desc="책·표지·기록·프리셋·설정을 파일 하나에 담아요. 음악 파일은 빠져요."
+          />
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          className={rowClass}
+          onClick={() =>
+            void run(exportRecords, '기록 백업 파일을 저장했어요.', '백업 파일을 만들지 못했어요.')
+          }
+        >
+          <Row title="기록만 백업(JSON)" desc="표지를 뺀 가벼운 파일이에요." />
         </button>
         <button
           type="button"
@@ -105,12 +124,12 @@ export function ExportPanel() {
           className={rowClass}
           onClick={() => fileRef.current?.click()}
         >
-          <Row title="백업 불러오기" desc="백업 파일로 기록을 되살려요." />
+          <Row title="백업 불러오기" desc="백업 파일(ZIP 또는 JSON)로 기록을 되살려요." />
         </button>
         <input
           ref={fileRef}
           type="file"
-          accept="application/json,.json"
+          accept="application/zip,.zip,application/json,.json"
           hidden
           aria-label="백업 파일 고르기"
           onChange={(e) => {
@@ -129,7 +148,8 @@ export function ExportPanel() {
           <p className="mt-3 text-sm text-ink-muted">
             {restoreFile.name}
             <br />
-            같은 책·기록은 백업 내용으로 바뀌고, 이 기기에만 있는 기록은 그대로 남아요.
+            같은 책·기록은 백업 내용으로 바뀌고, 이 기기에만 있는 기록은 그대로 남아요. 표지가 없는
+            백업이면 이 기기의 표지는 그대로 둬요.
           </p>
           <div className="mt-5 grid grid-cols-2 gap-2">
             <button

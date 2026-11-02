@@ -39,7 +39,7 @@ export interface SpineLook {
   height: number;
 }
 
-/** DESIGN.md 8.4: 색은 id로 고정, 폭은 쪽수에 비례(26~42px), 높이는 id에 따라(86~128px) */
+/** DESIGN.md 8.4: 색은 id로 고정, 폭은 쪽수에 비례(26~42px), 높이는 id에 따라(100~142px) */
 export function spineLook(id: string, totalPages: number): SpineLook {
   const h = hash(id);
   const colorIndex = (h % 6) + 1;
@@ -48,7 +48,7 @@ export function spineLook(id: string, totalPages: number): SpineLook {
     colorIndex,
     darkInk: colorIndex === 2 || colorIndex === 6,
     width: Math.round(26 + ((pages - 100) / 400) * 16),
-    height: 86 + (Math.floor(h / 6) % 43),
+    height: 100 + (Math.floor(h / 6) % 43),
   };
 }
 
