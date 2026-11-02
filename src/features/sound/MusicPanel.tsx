@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { VolumeSlider } from '../../components/VolumeSlider';
 import { importTracks } from './importTracks';
 import { PlayerIcon, type PlayerIconName } from './PlayerIcon';
 import { TrackList } from './TrackList';
@@ -84,8 +85,8 @@ export function MusicPanel() {
 
       {music.tracks.length === 0 ? (
         <p className="rounded-[var(--radius-lg)] border border-dashed border-line-strong px-4 py-5 text-sm text-ink-muted">
-          기기에 있는 음악 파일(mp3, m4a, ogg, wav)을 불러오면 환경음과 함께 들을 수 있어요. 파일은 이
-          기기 안에만 저장돼요.
+          기기에 있는 음악 파일(mp3, m4a, ogg, wav)을 불러오면 환경음과 함께 들을 수 있어요. 파일은
+          이 기기 안에만 저장돼요.
         </p>
       ) : (
         <div className="flex flex-col gap-2 rounded-[var(--radius-lg)] border border-line bg-surface px-4 pt-3 pb-1">
@@ -116,14 +117,11 @@ export function MusicPanel() {
             />
           </div>
           <div className="flex items-center gap-3">
-            <input
-              type="range"
-              min={0}
-              max={100}
+            <VolumeSlider
               value={volume}
-              aria-label="음악 음량"
-              onChange={(e) => music.setVolume(Number(e.target.value) / 100)}
-              className="h-11 grow accent-accent"
+              label="음악 음량"
+              onChange={(v) => music.setVolume(v / 100)}
+              className="grow"
             />
             <span className="w-10 text-right text-sm text-ink-muted tabular-nums">{volume}%</span>
           </div>

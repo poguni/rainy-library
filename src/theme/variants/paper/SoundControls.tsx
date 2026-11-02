@@ -1,4 +1,5 @@
 import { SoundIcon } from '../../../features/sound/SoundIcon';
+import { MedalMixer } from '../MedalMixer';
 
 export interface SoundControlLayer {
   soundId: string;
@@ -46,54 +47,6 @@ export function SoundControls({ layers, variant, onToggle, onVolume }: SoundCont
     );
   }
 
-  return (
-    <ul className="flex flex-col gap-2.5">
-      {layers.map((l) => (
-        <li
-          key={l.soundId}
-          className="flex flex-col gap-1 rounded-[var(--radius-lg)] border border-line bg-surface px-4 pt-2 pb-1"
-        >
-          <div className={`flex items-center gap-2.5 ${l.on ? 'text-ink' : 'text-ink-muted'}`}>
-            <SoundIcon id={l.soundId} size={22} />
-            <span className="grow text-md">{l.label}</span>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={l.on}
-              aria-label={`${l.label} 켜기`}
-              onClick={() => onToggle?.(l.soundId)}
-              className="flex min-h-11 items-center"
-            >
-              <span
-                aria-hidden="true"
-                className={`relative h-7 w-12 rounded-full transition-colors duration-150 ${
-                  l.on ? 'bg-accent' : 'bg-line-strong'
-                }`}
-              >
-                <span
-                  className={`absolute top-1 size-5 rounded-full bg-surface-raised transition-[left] duration-150 ${
-                    l.on ? 'left-6' : 'left-1'
-                  }`}
-                />
-              </span>
-            </button>
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={pct(l.volume)}
-              aria-label={`${l.label} 음량`}
-              onChange={(e) => onVolume?.(l.soundId, Number(e.target.value) / 100)}
-              className={`h-11 grow accent-accent ${l.on ? '' : 'opacity-50'}`}
-            />
-            <span className="w-10 text-right text-sm text-ink-muted tabular-nums">
-              {pct(l.volume)}%
-            </span>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
+  // 사운드 탭은 두 테마가 같은 메달 방식을 씁니다(2026-11-02 통일).
+  return <MedalMixer layers={layers} onToggle={onToggle} onVolume={onVolume} />;
 }

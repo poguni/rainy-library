@@ -1,4 +1,5 @@
 import type { BookSpineProps } from '../paper/BookSpine';
+import { SpineTitle } from '../SpineTitle';
 
 /** 위·아래 금박 이중 띠 */
 const Band = ({ thick }: { thick: boolean }) => (
@@ -30,15 +31,14 @@ export function BookSpine({ title, look, selected, onSelect }: BookSpineProps) {
       }`}
     >
       <Band thick={selected} />
-      <span
-        className={`min-h-0 overflow-hidden font-display [writing-mode:vertical-rl] ${
+      <SpineTitle
+        title={title}
+        className={`font-display ${
           selected
-            ? 'text-[13px] font-bold tracking-[3px] text-ink-strong'
-            : 'text-[11px] tracking-[2px] text-accent-strong'
+            ? 'text-[13px] font-bold tracking-[1px] text-ink-strong'
+            : 'text-[11px] tracking-[1px] text-accent-strong'
         }`}
-      >
-        {title}
-      </span>
+      />
       <Band thick={selected} />
     </button>
   );

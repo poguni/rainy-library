@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { VolumeSlider } from '../../components/VolumeSlider';
 import { SoundControls } from '../../theme/parts';
 import { useTimer } from '../timer/timerContext';
 import { MusicPanel } from './MusicPanel';
@@ -84,14 +85,11 @@ export function SoundPage() {
           전체 음량
         </label>
         <div className="flex items-center gap-3">
-          <input
+          <VolumeSlider
             id="master-volume"
-            type="range"
-            min={0}
-            max={100}
             value={master}
-            onChange={(e) => mixer.setMaster(Number(e.target.value) / 100)}
-            className="h-11 grow accent-accent"
+            onChange={(v) => mixer.setMaster(v / 100)}
+            className="grow"
           />
           <span className="w-10 text-right text-sm text-ink-muted tabular-nums">{master}%</span>
         </div>

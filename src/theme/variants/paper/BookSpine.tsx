@@ -1,4 +1,5 @@
 import type { SpineLook } from '../../../lib/books';
+import { SpineTitle } from '../SpineTitle';
 
 export interface BookSpineProps {
   title: string;
@@ -26,11 +27,14 @@ export function BookSpine({ title, look, selected, leaning, onSelect }: BookSpin
         transform: `${selected ? 'translateY(-10px)' : ''} ${leaning ? 'rotate(8deg)' : ''}`,
         transformOrigin: 'bottom left',
       }}
-      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[2px] py-2 font-display [writing-mode:vertical-rl] transition-transform duration-150 ${
-        selected ? 'text-[13px] font-bold tracking-[3px]' : 'text-xs tracking-[2px]'
-      } ${leaning ? 'ml-1' : ''}`}
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-[2px] py-2 font-display transition-transform duration-150 ${
+        leaning ? 'ml-1' : ''
+      }`}
     >
-      {title}
+      <SpineTitle
+        title={title}
+        className={selected ? 'text-[13px] font-bold tracking-[1px]' : 'text-xs tracking-[1px]'}
+      />
     </button>
   );
 }

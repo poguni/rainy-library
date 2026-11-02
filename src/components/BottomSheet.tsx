@@ -9,17 +9,24 @@ interface Props {
 /** 공통 바텀 시트(DESIGN.md 7장): 위쪽 모서리 16px, 손잡이, 배경 어둡게. Esc나 바깥을 누르면 닫힘. */
 export function BottomSheet({ title, onClose, children }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
+  // 부모가 다시 그려질 때마다 onClose가 새 함수로 바뀌어도 포커스를 다시 옮기지 않도록,
+  // 최신 onClose는 ref로 들고 아래 effect는 열릴 때 한 번만 실행합니다.
+  // (다시 실행되면 휴대폰 키보드가 닫혔다 열리며 한글 조합이 끊깁니다.)
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  });
 
   useEffect(() => {
     const prevFocus = document.activeElement as HTMLElement | null;
     panelRef.current?.querySelector<HTMLElement>('input, button, select')?.focus();
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current();
     document.addEventListener('keydown', onKey);
     return () => {
       document.removeEventListener('keydown', onKey);
       prevFocus?.focus();
     };
-  }, [onClose]);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-20 flex items-end justify-center">
